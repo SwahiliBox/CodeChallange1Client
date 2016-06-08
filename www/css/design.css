@@ -1,0 +1,12 @@
+/*body {margin:25px; font:12px Verdana, Arial, Helvetica}*/
+body {margin:25px;font:17px Verdana, Arial, Helvetica}
+* {padding:0; margin:0}
+.dropdown {float:left; padding-right:2px}
+.dropdown dt {width:auto; padding:8px; font-weight:bold;}
+.dropdown dt:hover {background:url(images/header_over.gif)}
+.dropdown dd {position:absolute; overflow:hidden; width:100px; display:none; background:whitesmoke; z-index:200;margin-top: 5px; opacity:0}
+.dropdown ul {width:100px; list-style:none; border-top:none;}
+.dropdown li {display:inline;padding-top: 15px;}
+.dropdown a, .dropdown a:active, .dropdown a:visited {display:block; padding:5px; color:#333; text-decoration:none; background:#FAFA08;; width:194px}
+.dropdown a:hover {background:#d9e1e4; color:#000}
+.dropdown .separator {border-bottom:1px solid #b9d6dc}
