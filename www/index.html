@@ -103,351 +103,339 @@
             
             
             
-              function check()
-            {
+                  function check() {
+                                       var pass1 = document.getElementById("pass1").value;
+                                        var pass2 = document.getElementById("pass2").value;
+                                        var det = document.getElementById("details");
+
+                                        if(pass1 !=pass2){
+
+                                                            det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
+                                                         }
+                                                            else{
+                                                            
+                                                              det.innerHTML="<b style='color:green;'>passwords correct</b>"    
+                                                            }
+
+                                    }
+            
+              function strongpass() {
+            
          
-                var pass1 = document.getElementById("pass1").value;
-                var pass2 = document.getElementById("pass2").value;
-                var det = document.getElementById("details");
-             
-                if(pass1 !=pass2)
-                    {
-                    det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
-                    }
-                else
-                    {
-                     det.innerHTML="<b style='color:green;'>passwords correct</b>"    
-                    }
-                
-            }
-              function strongpass()
-            {
-         
-                var pass1 = document.getElementById("pass1").value;
-             
-                var stronger = document.getElementById("str");
-             
-                if(pass1.length<4)
-                    {
-                    stronger.innerHTML="<b style='color:red;'>weak</b>"    
-                    }
-                else if(pass1.length<6)
-                    {
-                     stronger.innerHTML="<b style='color:orange;'>medium</b>"    
-                    }
-                else
-                    {
-                     stronger.innerHTML="<b style='color:green;'>Strong</b>"    
-                    }
-                
-            }
+                                    var pass1 = document.getElementById("pass1").value;
+
+                                    var stronger = document.getElementById("str");
+
+                                    if(pass1.length<4){
+                                        
+                                        stronger.innerHTML="<b style='color:red;'>weak</b>"    
+                                        }
+                                    else if(pass1.length<6){
+                                        
+                                         stronger.innerHTML="<b style='color:orange;'>medium</b>"    
+                                        }
+                                    else{
+                                        
+                                         stronger.innerHTML="<b style='color:green;'>Strong</b>"    
+                                        }
+
+                                }
             
            
-             function events()
-            {
-                 $.afui.loadContent("#events",false,false,"fade"); 
-            }
-             function aboutus()
-            {
-                 $.afui.loadContent("#aboutus",false,false,"fade"); 
-            }
-             function home()
-            {
-                 $.afui.loadContent("#landing",false,false,"fade"); 
-            }
-             function homeev()
-            {
-                 $.afui.loadContent("#events",false,false,"fade"); 
-            }
+             function events(){
+                            
+                                 $.afui.loadContent("#events",false,false,"fade"); 
+                             }
+             function aboutus() {
+                               
+                                     $.afui.loadContent("#aboutus",false,false,"fade"); 
+                                }
+             function home(){
+                            
+                                 $.afui.loadContent("#landing",false,false,"fade"); 
+                            }
             
-             function pastev()
-            {
-                 $.afui.loadContent("#pastev",false,false,"fade"); 
-            }
+             function homeev(){
+                                
+                                     $.afui.loadContent("#events",false,false,"fade"); 
+                              }
             
-            function rs()
-            {
-                   var updiv = document.getElementById("upcomingev");
-                  var name = document.getElementById("fname").value;
-                  var event = document.getElementById("event").value;
-                        
-                $.ajax
-({
-  type: "POST",
-  url: "http://192.168.1.132:8000/RSVP_API/rsvp",
-  crossDomain:true, 
-  dataType: "json",
-  data:JSON.stringify({name: name, eventname:event})
- }).done(function ( data ) {
-      alert("ajax callback response:"+JSON.stringify(data));
-   })
-                alert("We are working to make this happen");
-            }
+             function pastev() {
+                               
+                                     $.afui.loadContent("#pastev",false,false,"fade"); 
+                               }
+
+            function rs() {
+                           
+                                   var updiv = document.getElementById("upcomingev");
+                                  var name = document.getElementById("fname").value;
+                                  var event = document.getElementById("event").value;
+
+                                            
+                           $.ajax ({
+                                      type: "POST",
+                                      url: "http://192.168.1.132:8000/RSVP_API/rsvp",
+                                      crossDomain:true, 
+                                      dataType: "json",
+                                      data:JSON.stringify({name: name, eventname:event})
+                                     }).done(function ( data ) {
+                                          alert("ajax callback response:"+JSON.stringify(data));
+                                      })
+                                alert("We are working to make this happen");
+                            }
             
             
             function eventListener(show_id)
-            {
-                 var show=confirm("RSVP to "+ show_id +"?");
-                if(show==true)
-                    {
-                     $.afui.loadContent("#rsvpy",false,false,"fade"); 
-                        var evdisp = document.getElementById("evdisp");
-    evdisp.innerHTML=
-    '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
-                     
-                    }
-                else
-                    {
-                    return false;   
-                    }
-                
-            }
+                                        {
+                                             var show=confirm("RSVP to "+ show_id +"?");
+                                            if(show==true){
+                                                
+                                                          $.afui.loadContent("#rsvpy",false,false,"fade"); 
+                                                        var evdisp = document.getElementById("evdisp");
+                                                        evdisp.innerHTML=
+                                                        '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+
+                                                }
+                                            else
+                                                {
+                                                return false;   
+                                                }
+
+                                        }
             
-             function upcoming()
-            {
+             function upcoming() {
                
-                
-                 var updiv = document.getElementById("upcomingev");
-                        
-var display;
- var index, len;
+                                var updiv = document.getElementById("upcomingev");
 
-$.ajax({
-        dataType: "json",
-        data: display,
-        url: "http://192.168.1.118:3000/events",
-        cache: false,
-        method: 'GET',
-        success: function(rsp) {
+                                var display;
+                                 var index, len;
 
-var text = "";
-var i;
-for (i = 0; i < rsp.length; i++) {
-    
-    
-     var title=rsp[i].title;
-              text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br>' + '<b style="color:blue;">' + rsp[i].date  +'</b></br>RSVP >>></div><br>';
-  
-    updiv.innerHTML=text;
-}
-          
-                    
-                   
-             
-         
-         
-        }
-    });
+                                $.ajax({
+                                        dataType: "json",
+                                        data: display,
+                                        url: "http://192.168.1.118:3000/events",
+                                        cache: false,
+                                        method: 'GET',
+                                        success: function(rsp) {
+
+                                var text = "";
+                                var i;
+                                for (i = 0; i < rsp.length; i++) {
+
+
+                                                 var title=rsp[i].title;
+                                                          text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br>' + '<b style="color:blue;">' + rsp[i].date  +'</b></br>RSVP >>></div><br>';
+
+                                                updiv.innerHTML=text;
+                                }
+
+                                        }
+                                    });
+
+                                   $.afui.loadContent("#upcoming",false,false,"fade"); 
             
-     
-    
-   $.afui.loadContent("#upcoming",false,false,"fade"); 
-            
-    
+                              }
               
-            }
-            
-            
-            
-            
-            
-             function login()
-            {
-                 $.afui.loadContent("#login",false,false,"fade"); 
-            }
-            
-            function tomain()
-            {
-                 $.afui.loadContent("#mainpage",false,false,"fade"); 
-            }
-            
-             function signup()
-            {
-                 $.afui.loadContent("#signup",false,false,"fade"); 
-            }
-            
-             function loginauth()
-            {
-                var email = document.getElementById("email").value;
-                var pwd = document.getElementById("password").value;
-                if(email=='' && pwd=='')
-                    {
-              var error={ message:"Email and password are empty",
-                    position:"tc",
-                    delay:2000,
-                    autoClose:true,
-                    type:"error",
-            };
-                        $.afui.toast(error);
-                    }
-                
-                if(pwd=='' && email !='')
-                    {
-              var passerror={ message:"Enter password",
-                    position:"tc",
-                    delay:2000,
-                    autoClose:true,
-                    type:"error",
-            };
-                          $.afui.toast(passerror);
-                    }
-                if(email=='' && pwd !='')
-                    {
-              var emailerror={ message:"Enter Email",
-                    position:"tc",
-                    delay:2000,
-                    autoClose:true,
-                    type:"error",
-            };
-                          $.afui.toast(emailerror);
-                    }
-                else if(email !='' && pwd !=='')
-                    {
-                          $.afui.loadContent("#landing",false,false,"fade");  
-                    }
-                
-                
-            
            
-            }
             
-            
-            
-             function signupauth()
-            {
-                var emails = document.getElementById("emails").value;
-                var pass1 = document.getElementById("pass1").value;
-                var pass2 = document.getElementById("pass2").value;
-                var uname = document.getElementById("uname").value;
-                var fname = document.getElementById("fname").value;
-                var lname = document.getElementById("lname").value;
-                if(pass1.length<4 && pass1 !='')
-                    {
-                       $.afui.popup("Your password is too weak!"); 
-                        return false;
-                    }
-                else if(pass1 !=pass2)
-                    {
-                      var error1={ message:"Your passwords do not match",
-                    position:"tc",
-                    delay:2000,
-                    autoClose:true,
-                    type:"error",
-            };
-                        $.afui.toast(error1);
-                    }
-                else
-                    {
-                if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname=='')
-                    {
-              var error={ message:"All fields are required",
-                    position:"tc",
-                    delay:2000,
-                    autoClose:true,
-                    type:"error",
-            };
-                        $.afui.toast(error);
-                    }
-                
-                
-                else
-                    {
                         
-                        $.afui.popup("You have signup successfully!, now signin!");
-                    }
-                    }
-                
-                
+             function login() {
+                           
+                                 $.afui.loadContent("#login",false,false,"fade"); 
+                             }
             
-           
-            }
+            function tomain() {
+                           
+                                 $.afui.loadContent("#mainpage",false,false,"fade"); 
+                             }
+            
+             function signup() {
+                               
+                                     $.afui.loadContent("#signup",false,false,"fade"); 
+                                }
+            
+             function loginauth()  {
+                                  
+                                        var email = document.getElementById("email").value;
+                                        var pwd = document.getElementById("password").value;
+                                        if(email=='' && pwd==''){
+                                         
+                                            var error={ message:"Email and password are empty",
+                                                        position:"tc",
+                                                        delay:2000,
+                                                        autoClose:true,
+                                                        type:"error",
+                                                      };
+                                                            $.afui.toast(error);
+                                         }
+
+                                        if(pwd=='' && email !=''){
+                                            
+                                               var passerror={ message:"Enter password",
+                                                                position:"tc",
+                                                                delay:2000,
+                                                                autoClose:true,
+                                                                type:"error",
+                                                            };
+                                                  $.afui.toast(passerror);
+                                            }
+                                        if(email=='' && pwd !=''){
+                                            
+                                                                  var emailerror={ message:"Enter Email",
+                                                                                        position:"tc",
+                                                                                        delay:2000,
+                                                                                        autoClose:true,
+                                                                                        type:"error",
+                                                                              };
+                                                                   $.afui.toast(emailerror);
+                                                               }
+                                        else if(email !='' && pwd !=='') {
+                                           
+                                                  $.afui.loadContent("#landing",false,false,"fade");  
+                                              }
+
+
+
+
+                                    }
+            
+            
+            
+             function signupauth(){
+                                    
+                                        var emails = document.getElementById("emails").value;
+                                        var pass1 = document.getElementById("pass1").value;
+                                        var pass2 = document.getElementById("pass2").value;
+                                        var uname = document.getElementById("uname").value;
+                                        var fname = document.getElementById("fname").value;
+                                        var lname = document.getElementById("lname").value;
+                                        if(pass1.length<4 && pass1 !=''){
+                                            
+                                               $.afui.popup("Your password is too weak!"); 
+                                                return false;
+                                            }
+                                        else if(pass1 !=pass2)  {
+                                          
+                                              var error1={ message:"Your passwords do not match",
+                                                            position:"tc",
+                                                            delay:2000,
+                                                            autoClose:true,
+                                                            type:"error",
+                                                         };
+                                                $.afui.toast(error1);
+                                            }
+                                        else
+                                            {
+                                        if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
+                                            
+                                      var error={ message:"All fields are required",
+                                                    position:"tc",
+                                                    delay:2000,
+                                                    autoClose:true,
+                                                    type:"error",
+                                                 };
+                                                $.afui.toast(error);
+                                            }
+
+
+                                        else{
+                                            
+
+                                                $.afui.popup("You have signup successfully!, now signin!");
+                                            }
+                                            }
+
+
+
+
+                                    }
             
         /*
         opening sidebamenu
         */
             
             function openNav() {
-    document.getElementById("mySidenav").style.width = "40%";
-}
+                                  document.getElementById("mySidenav").style.width = "40%";
+                                }
 
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
+                           document.getElementById("mySidenav").style.width = "0";
+                    }
             
             /*
             opening swahilibox box webpage function
             */
             function openweb() {
-    "use strict";
-  
-    try {
-     window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
-       
-    } catch (e) {
-        $.afui.toast("failed to open webpage");
-    }
+                                "use strict";
+
+                                try {
+                                       window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
+
+                                } catch (e) {
+                                            $.afui.toast("failed to open webpage");
+                                }
 
    
-}
+                        }
             
             
-               function showup()
-            {
-                var div = document.getElementById("searchdiv");
-                div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
-              
-                
-                    }
-            
-            function display()
-            {
-             var data = document.getElementById("searchev");
-             var input = document.getElementById("inputee").value;
-                data.innerHTML=input;
-            }
-            
-            
-            
-                function upcomingEvents()
-        {
+               function showup() {
+                               
+                                    var div = document.getElementById("searchdiv");
+                                    div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
 
-        
-var events;
 
-// AJAX code to submit form.
-$.ajax({
-type: "GET",
-url: "http://192.168.1.118:8080/api/status",
-data: events,
-cache: false,
-success: function(html) {
-   
-            outdivy.innerHTML=html;
+                                }
             
-     
-    
+            function display() {
+                               
+                                 var data = document.getElementById("searchev");
+                                 var input = document.getElementById("inputee").value;
+                                    data.innerHTML=input;
+                                }
+            
+            
+            
+                function upcomingEvents()  {
+                                          
 
-   $.afui.loadContent("#inboxy",false,false,"fade");
-            
+
+                                    var events;
+
+                                    // AJAX code to submit form.
+                                    $.ajax({
+                                            type: "GET",
+                                            url: "http://192.168.1.118:8080/api/status",
+                                            data: events,
+                                            cache: false,
+                                            success: function(html) {
+
+                                                                   outdivy.innerHTML=html;
+
+
+
+
+                                               $.afui.loadContent("#inboxy",false,false,"fade");
+
+
+
+
+                                    }
+                                    });
+                                }
+            function send() {
            
-        
+                                  
+                   $.ajax  ({
+                                  type: "POST",
+                                  url: "http://192.168.1.130:8080/RSVP_API/server1",
+                                  crossDomain:true, 
+                                  dataType: "json",
+                                  data:JSON.stringify({username: "Dennis", eventname:"gitday"})
+                            }).done(function ( data ) {
+                                      alert("ajax callback response:"+JSON.stringify(data));
+                         }) 
 
-}
-});
-        }
-            function send()
-            {
-               $.ajax
-({
-  type: "POST",
-  url: "http://192.168.1.130:8080/RSVP_API/server1",
-  crossDomain:true, 
-  dataType: "json",
-  data:JSON.stringify({username: "Dennis", eventname:"gitday"})
- }).done(function ( data ) {
-      alert("ajax callback response:"+JSON.stringify(data));
-   }) 
-                
             }
         </script>
     </head>
@@ -493,22 +481,22 @@ success: function(html) {
         <div class="upage vertical-col left view" id="login" data-header="af-header-0" data-footer="none">
             <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#FAFA08;">
 
-                <h1 style="color:black;margin-top:3px;">Login</h1>
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                    <h1 style="color:black;margin-top:3px;">Login</h1>
+                    <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
 
-                <div class="widget-container wrapping-col single-centered"></div>
-                <div class="widget-container content-area horiz-area wrapping-col header-left">
-                    <a href="#mainpage">
-                        <img src="images/back1.png" id="back">
-                    </a>
-                </div>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col header-left">
+                           <a href="#mainpage">
+                                   <img src="images/back1.png" id="back">
+                           </a>
+                    </div>
 
-                <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
             </header>
             <center>
-                <input type="text" id="email" placeholder="Enter email or Username">
-                <input type="text" id="password" placeholder="Enter password">
-                <input type="submit" id="submitbtn" onclick="loginauth()">
+                         <input type="text" id="email" placeholder="Enter email or Username">
+                        <input type="text" id="password" placeholder="Enter password">
+                        <input type="submit" id="submitbtn" onclick="loginauth()">
             </center>
 
         </div>
@@ -522,7 +510,7 @@ success: function(html) {
                 <div class="widget-container wrapping-col single-centered"></div>
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
                     <a href="#mainpage">
-                        <img src="images/back1.png" id="back">
+                            <img src="images/back1.png" id="back">
                     </a>
                 </div>
 
@@ -542,23 +530,23 @@ success: function(html) {
 
         </div>
         <div class="upage vertical-col left view" id="landing" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#FAFA08;">
+                    <div style="background:#FAFA08;">
 
-                <span onclick="openNav()"><button style="margin-top:10px;background-color:blue;">☰Menu</button></span>
+                        <span onclick="openNav()"><button style="margin-top:10px;background-color:blue;">☰Menu</button></span>
 
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
-                <div id="mySidenav" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">←</a>
-                    <a href="#about" onclick="closeNav()" id="info">About Us</a>
-                    <br>
-                    <a href="#events" onclick="closeNav()">Events</a>
-                    <br>
-                   <!-- <a href="#rsvp" onclick="closeNav()">RSVP</a> -->
-                    <br>
-                    <a href="#" onclick="closeNav()">Contact</a>
-                    <br>
-                </div>
-            </div>
+                        <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                        <div id="mySidenav" class="sidenav">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">←</a>
+                                <a href="#about" onclick="closeNav()" id="info">About Us</a>
+                                <br>
+                                <a href="#events" onclick="closeNav()">Events</a>
+                                <br>
+                               <!-- <a href="#rsvp" onclick="closeNav()">RSVP</a> -->
+                                <br>
+                                <a href="#" onclick="closeNav()">Contact</a>
+                                <br>
+                        </div>
+                    </div>
 
             <center>
                 <p style="font-weight:bold;margin-top:40px;">Welcome to Swahilibox Tech Society</p>
@@ -569,7 +557,7 @@ success: function(html) {
         <div class="upage vertical-col left view" id="about" data-header="none" data-footer="none" style="background:white;">
             <div style="background:#FAFA08;">
 
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                  <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
                     <a onclick="home()">
                         <img src="images/back1.png" id="back">
@@ -631,6 +619,7 @@ success: function(html) {
             <div style="background:#FAFA08;">
 
                 <dl class="dropdown">
+                    
                     <dt id="one-ddheader" onclick="homeev()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
 
                 </dl>
@@ -677,15 +666,17 @@ success: function(html) {
         
          <div class="upage vertical-col left view" id="rsvpy" data-header="none" data-footer="none" style="background:white;color:black;">
               <div style="background:#FAFA08;">
-                <dl class="dropdown">
-                    <dt id="one-ddheader" ><a href="#events"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></a></dt>
+                    <dl class="dropdown">
+                        <dt id="one-ddheader" ><a href="#events"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></a></dt>
 
-                </dl>
+                    </dl>
 
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                    <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
 
             </div>
-             <div id="evdisp" ></div>
+            <div id="evdisp" >
+             
+            </div>
         </div>
         <div class="upage view" id="uib_page_2" data-header="none" data-footer="af-footer-0">
             <div class="pages">
@@ -694,7 +685,8 @@ success: function(html) {
             <div class="upage-outer">
                 <div class="upage-content ac0 content-area vertical-col left"></div>
             </div>
-            <footer class="outer-element uib_w_2" data-uib="app_framework/footer" data-ver="2" id="af-footer-0"></footer>
+            <footer class="outer-element uib_w_2" data-uib="app_framework/footer" data-ver="2" id="af-footer-0">
+            </footer>
         </div>
 
     </body>
