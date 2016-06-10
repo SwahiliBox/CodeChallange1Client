@@ -20,6 +20,7 @@
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/skel.min.js"></script>
         <script src="assets/js/util.js"></script>
+       
 
         <script type="text/javascript" src="js/drop.js"></script>
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
@@ -166,6 +167,20 @@
             
             function rs()
             {
+                   var updiv = document.getElementById("upcomingev");
+                  var name = document.getElementById("fname").value;
+                  var event = document.getElementById("event").value;
+                        
+                $.ajax
+({
+  type: "POST",
+  url: "http://192.168.1.132:8000/RSVP_API/rsvp",
+  crossDomain:true, 
+  dataType: "json",
+  data:JSON.stringify({name: name, eventname:event})
+ }).done(function ( data ) {
+      alert("ajax callback response:"+JSON.stringify(data));
+   })
                 alert("We are working to make this happen");
             }
             
@@ -178,7 +193,7 @@
                      $.afui.loadContent("#rsvpy",false,false,"fade"); 
                         var evdisp = document.getElementById("evdisp");
     evdisp.innerHTML=
-    '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+    '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
                      
                     }
                 else
@@ -200,7 +215,7 @@ var display;
 $.ajax({
         dataType: "json",
         data: display,
-        url: "http://192.168.1.118:8080/event/events",
+        url: "http://192.168.1.118:3000/events",
         cache: false,
         method: 'GET',
         success: function(rsp) {
@@ -210,8 +225,8 @@ var i;
 for (i = 0; i < rsp.length; i++) {
     
     
-     var title=rsp[i].eventTitle;
-              text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].eventTitle + '</b> <br>' + rsp[i].eventDescription + '<br>' + '<b style="color:blue;">' + rsp[i].eventDate  +'</b>RSVP</div><br>';
+     var title=rsp[i].title;
+              text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br>' + '<b style="color:blue;">' + rsp[i].date  +'</b></br>RSVP >>></div><br>';
   
     updiv.innerHTML=text;
 }
@@ -337,7 +352,8 @@ for (i = 0; i < rsp.length; i++) {
                 
                 else
                     {
-                        $.afui.popup("signup hurray!!");
+                        
+                        $.afui.popup("You have signup successfully!, now signin!");
                     }
                     }
                 
@@ -419,6 +435,20 @@ success: function(html) {
 }
 });
         }
+            function send()
+            {
+               $.ajax
+({
+  type: "POST",
+  url: "http://192.168.1.130:8080/RSVP_API/server1",
+  crossDomain:true, 
+  dataType: "json",
+  data:JSON.stringify({username: "Dennis", eventname:"gitday"})
+ }).done(function ( data ) {
+      alert("ajax callback response:"+JSON.stringify(data));
+   }) 
+                
+            }
         </script>
     </head>
 
@@ -439,6 +469,7 @@ success: function(html) {
                             <br>
 
                             <button id="loginbtn" onclick="login()">Sign In</button>
+                            
 
                             <br>
                             <p style="color:gray;">Sign in using Facebook or Google</p>
@@ -446,6 +477,7 @@ success: function(html) {
                             <br>
                             <button id="lgn-facebook">Facebook</button>
                             <button id="lgn-google">Google</button>
+                        
 
                             <button id="signupbtn" onclick="signup()">Sign Up</button>
 
@@ -512,7 +544,7 @@ success: function(html) {
         <div class="upage vertical-col left view" id="landing" data-header="none" data-footer="none" style="background:white;">
             <div style="background:#FAFA08;">
 
-                <span onclick="openNav()"><button style="margin-top:10px;">☰Menu</button></span>
+                <span onclick="openNav()"><button style="margin-top:10px;background-color:blue;">☰Menu</button></span>
 
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div id="mySidenav" class="sidenav">
@@ -521,7 +553,7 @@ success: function(html) {
                     <br>
                     <a href="#events" onclick="closeNav()">Events</a>
                     <br>
-                    <a href="#rsvp" onclick="closeNav()">RSVP</a>
+                   <!-- <a href="#rsvp" onclick="closeNav()">RSVP</a> -->
                     <br>
                     <a href="#" onclick="closeNav()">Contact</a>
                     <br>
