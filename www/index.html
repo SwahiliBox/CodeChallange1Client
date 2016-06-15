@@ -26,6 +26,7 @@
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
         <script src="assets/js/main.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <script src="http://debug-software.intel.com/target/target-script-min.js#MKsEsaKLwNSSAcBAJGpI-CSJMMeCyNxtUYCVNBWKqf0"></script>
 
         <!--
   * The "meta viewport" tag (below) helps your app size appropriately to a device's ideal viewport.
@@ -104,339 +105,328 @@
             
             
                   function check() {
-                                       var pass1 = document.getElementById("pass1").value;
-                                        var pass2 = document.getElementById("pass2").value;
-                                        var det = document.getElementById("details");
+                        var pass1 = document.getElementById("pass1").value;
+                        var pass2 = document.getElementById("pass2").value;
+                        var det = document.getElementById("details");
 
-                                        if(pass1 !=pass2){
+                        if(pass1 !=pass2){
 
-                                                            det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
-                                                         }
-                                                            else{
-                                                            
-                                                              det.innerHTML="<b style='color:green;'>passwords correct</b>"    
-                                                            }
+                            det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
+                        }
+                        else{
 
-                                    }
+                          det.innerHTML="<b style='color:green;'>passwords correct</b>"    
+                        }
+                    }
             
               function strongpass() {
-            
-         
-                                    var pass1 = document.getElementById("pass1").value;
+                    var pass1 = document.getElementById("pass1").value;
 
-                                    var stronger = document.getElementById("str");
+                    var stronger = document.getElementById("str");
 
-                                    if(pass1.length<4){
-                                        
-                                        stronger.innerHTML="<b style='color:red;'>weak</b>"    
-                                        }
-                                    else if(pass1.length<6){
-                                        
-                                         stronger.innerHTML="<b style='color:orange;'>medium</b>"    
-                                        }
-                                    else{
-                                        
-                                         stronger.innerHTML="<b style='color:green;'>Strong</b>"    
-                                        }
+                    if(pass1.length<4){
 
-                                }
-            
+                        stronger.innerHTML="<b style='color:red;'>weak</b>"    
+                    }
+                    else if(pass1.length<6){
+
+                         stronger.innerHTML="<b style='color:orange;'>medium</b>"    
+                    }
+                    else{
+
+                         stronger.innerHTML="<b style='color:green;'>Strong</b>"    
+                    }
+              }
+
            
              function events(){
                             
-                                 $.afui.loadContent("#events",false,false,"fade"); 
-                             }
+                 $.afui.loadContent("#events",false,false,"fade"); 
+             }
              function aboutus() {
                                
-                                     $.afui.loadContent("#aboutus",false,false,"fade"); 
-                                }
+                 $.afui.loadContent("#aboutus",false,false,"fade"); 
+             }
              function home(){
                             
-                                 $.afui.loadContent("#landing",false,false,"fade"); 
-                            }
+                 $.afui.loadContent("#landing",false,false,"fade"); 
+             }
             
              function homeev(){
                                 
-                                     $.afui.loadContent("#events",false,false,"fade"); 
-                              }
+                $.afui.loadContent("#events",false,false,"fade"); 
+             }
             
              function pastev() {
                                
-                                     $.afui.loadContent("#pastev",false,false,"fade"); 
-                               }
+                 $.afui.loadContent("#pastev",false,false,"fade"); 
+             }
 
             function rs() {
-                           
-                                   var updiv = document.getElementById("upcomingev");
-                                  var name = document.getElementById("fname").value;
-                                  var event = document.getElementById("event").value;
+                  var updiv = document.getElementById("upcomingev");
+                  var name = document.getElementById("fname").value;
+                  var event = document.getElementById("event").value;
 
-                                            
-                           $.ajax ({
-                                      type: "POST",
-                                      url: "http://192.168.1.132:8000/RSVP_API/rsvp",
-                                      crossDomain:true, 
-                                      dataType: "json",
-                                      data:JSON.stringify({name: name, eventname:event})
-                                     }).done(function ( data ) {
-                                          alert("ajax callback response:"+JSON.stringify(data));
-                                      })
-                                alert("We are working to make this happen");
-                            }
-            
-            
-            function eventListener(show_id)
-                                        {
-                                             var show=confirm("RSVP to "+ show_id +"?");
-                                            if(show==true){
-                                                
-                                                          $.afui.loadContent("#rsvpy",false,false,"fade"); 
-                                                        var evdisp = document.getElementById("evdisp");
-                                                        evdisp.innerHTML=
-                                                        '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
 
-                                                }
-                                            else
-                                                {
-                                                return false;   
-                                                }
+                   $.ajax ({
+                      type: "POST",
+                      url: "http://192.168.1.132:8000/RSVP_API/rsvp",
+                      crossDomain:true, 
+                      dataType: "json",
+                      data:JSON.stringify({name: name, eventname:event})
+                     }).done(function ( data ) {
+                       
+                            alert("ajax callback response:"+JSON.stringify(data));
+                       
+                        })
+                alert("We are working to make this happen");
+            }
+            function eventListener(show_id) {
+                                       
+                     var show=confirm("RSVP to "+ show_id +"?");
+                     if(show==true){
 
-                                        }
-            
+                          $.afui.loadContent("#rsvpy",false,false,"fade"); 
+                        var evdisp = document.getElementById("evdisp");
+                        evdisp.innerHTML=
+                        '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+
+                        }
+                    else {
+                       
+                        return false;   
+                        }
+
+                }
              function upcoming() {
                
-                                var updiv = document.getElementById("upcomingev");
+                    var updiv = document.getElementById("upcomingev");
 
-                                var display;
-                                 var index, len;
+                    var display;
+                     var index, len;
 
-                                $.ajax({
-                                        dataType: "json",
-                                        data: display,
-                                        url: "http://192.168.1.118:3000/events",
-                                        cache: false,
-                                        method: 'GET',
-                                        success: function(rsp) {
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.118:3000/events",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
 
-                                var text = "";
-                                var i;
-                                for (i = 0; i < rsp.length; i++) {
+                                    var text = "";
+                                    var i;
+                                    for (i = 0; i < rsp.length; i++) {
 
 
                                                  var title=rsp[i].title;
                                                           text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br>' + '<b style="color:blue;">' + rsp[i].date  +'</b></br>RSVP >>></div><br>';
 
                                                 updiv.innerHTML=text;
-                                }
+                                    }
 
-                                        }
-                                    });
+                            }
+                         });
 
-                                   $.afui.loadContent("#upcoming",false,false,"fade"); 
-            
-                              }
-              
-           
-            
-                        
-             function login() {
+                             $.afui.loadContent("#upcoming",false,false,"fade"); 
+
+                  }
+
+            function login() {
                            
-                                 $.afui.loadContent("#login",false,false,"fade"); 
-                             }
+                     $.afui.loadContent("#login",false,false,"fade"); 
+                  }
             
             function tomain() {
                            
-                                 $.afui.loadContent("#mainpage",false,false,"fade"); 
-                             }
-            
+                     $.afui.loadContent("#mainpage",false,false,"fade"); 
+                 }
+
              function signup() {
                                
-                                     $.afui.loadContent("#signup",false,false,"fade"); 
-                                }
+                    $.afui.loadContent("#signup",false,false,"fade"); 
+                    }
             
              function loginauth()  {
                                   
-                                        var email = document.getElementById("email").value;
-                                        var pwd = document.getElementById("password").value;
-                                        if(email=='' && pwd==''){
-                                         
-                                            var error={ message:"Email and password are empty",
-                                                        position:"tc",
-                                                        delay:2000,
-                                                        autoClose:true,
-                                                        type:"error",
-                                                      };
-                                                            $.afui.toast(error);
-                                         }
+                    var email = document.getElementById("email").value;
+                    var pwd = document.getElementById("password").value;
+                    if(email=='' && pwd==''){
 
-                                        if(pwd=='' && email !=''){
-                                            
-                                               var passerror={ message:"Enter password",
-                                                                position:"tc",
-                                                                delay:2000,
-                                                                autoClose:true,
-                                                                type:"error",
-                                                            };
-                                                  $.afui.toast(passerror);
-                                            }
-                                        if(email=='' && pwd !=''){
-                                            
-                                                                  var emailerror={ message:"Enter Email",
-                                                                                        position:"tc",
-                                                                                        delay:2000,
-                                                                                        autoClose:true,
-                                                                                        type:"error",
-                                                                              };
-                                                                   $.afui.toast(emailerror);
-                                                               }
-                                        else if(email !='' && pwd !=='') {
-                                           
-                                                  $.afui.loadContent("#landing",false,false,"fade");  
-                                              }
+                                var error={ message:"Email and password are empty",
+                                    position:"tc",
+                                    delay:2000,
+                                    autoClose:true,
+                                    type:"error",
+                                  };
+                                        $.afui.toast(error);
+                             }
 
+                    if(pwd=='' && email !=''){
 
+                           var passerror={ message:"Enter password",
+                                            position:"tc",
+                                            delay:2000,
+                                            autoClose:true,
+                                            type:"error",
+                                        };
+                              $.afui.toast(passerror);
+                        }
+                    if(email=='' && pwd !=''){
 
-
-                                    }
-            
-            
-            
-             function signupauth(){
-                                    
-                                        var emails = document.getElementById("emails").value;
-                                        var pass1 = document.getElementById("pass1").value;
-                                        var pass2 = document.getElementById("pass2").value;
-                                        var uname = document.getElementById("uname").value;
-                                        var fname = document.getElementById("fname").value;
-                                        var lname = document.getElementById("lname").value;
-                                        if(pass1.length<4 && pass1 !=''){
-                                            
-                                               $.afui.popup("Your password is too weak!"); 
-                                                return false;
-                                            }
-                                        else if(pass1 !=pass2)  {
-                                          
-                                              var error1={ message:"Your passwords do not match",
-                                                            position:"tc",
-                                                            delay:2000,
-                                                            autoClose:true,
-                                                            type:"error",
-                                                         };
-                                                $.afui.toast(error1);
-                                            }
-                                        else
-                                            {
-                                        if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
-                                            
-                                      var error={ message:"All fields are required",
+                              var emailerror={ message:"Enter Email",
                                                     position:"tc",
                                                     delay:2000,
                                                     autoClose:true,
                                                     type:"error",
-                                                 };
-                                                $.afui.toast(error);
-                                            }
+                                          };
+                               $.afui.toast(emailerror);
+                     }
+                    else if(email !='' && pwd !=='') {
 
+                                  $.afui.loadContent("#landing",false,false,"fade");  
+                    }
+                 
+                }
 
-                                        else{
-                                            
-
-                                                $.afui.popup("You have signup successfully!, now signin!");
-                                            }
-                                            }
-
-
-
-
-                                    }
             
+
+     function signupauth(){
+
+            var emails = document.getElementById("emails").value;
+            var pass1 = document.getElementById("pass1").value;
+            var pass2 = document.getElementById("pass2").value;
+            var uname = document.getElementById("uname").value;
+            var fname = document.getElementById("fname").value;
+            var lname = document.getElementById("lname").value;
+            if(pass1.length<4 && pass1 !=''){
+
+                           $.afui.popup("Your password is too weak!"); 
+                            return false;
+                        }
+            else if(pass1 !=pass2)  {
+
+                          var error1={ message:"Your passwords do not match",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                          };
+                            $.afui.toast(error1);
+             }
+            else {
+
+            if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
+
+                                  var error={ message:"All fields are required",
+                                                position:"tc",
+                                                delay:2000,
+                                                autoClose:true,
+                                                type:"error",
+                                             };
+                                            $.afui.toast(error);
+                                 }
+
+
+            else{
+
+
+                 $.afui.popup("You have signup successfully!, now signin!");
+            }
+
+            }
+
+
+
+
+    }
+
         /*
         opening sidebamenu
         */
             
             function openNav() {
-                                  document.getElementById("mySidenav").style.width = "40%";
-                                }
+                      document.getElementById("mySidenav").style.width = "40%";
+            }
 
 function closeNav() {
-                           document.getElementById("mySidenav").style.width = "0";
-                    }
-            
+    
+         document.getElementById("mySidenav").style.width = "0";
+}
+
             /*
             opening swahilibox box webpage function
             */
             function openweb() {
-                                "use strict";
+                    "use strict";
 
-                                try {
-                                       window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
+                    try {
+                        
+                       window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
 
-                                } catch (e) {
-                                            $.afui.toast("failed to open webpage");
-                                }
+                    } catch (e) {
+                        
+                         $.afui.toast("failed to open webpage");
+                      }
 
-   
-                        }
+
+            }
             
             
                function showup() {
                                
-                                    var div = document.getElementById("searchdiv");
-                                    div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
+                    var div = document.getElementById("searchdiv");
+                    div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
 
 
-                                }
+                    }
             
             function display() {
                                
-                                 var data = document.getElementById("searchev");
-                                 var input = document.getElementById("inputee").value;
-                                    data.innerHTML=input;
-                                }
-            
+                 var data = document.getElementById("searchev");
+                 var input = document.getElementById("inputee").value;
+                    data.innerHTML=input;
+             }
+
             
             
                 function upcomingEvents()  {
                                           
+                        var events;
 
+                        // AJAX code to submit form.
+                        $.ajax({
+                                type: "GET",
+                                url: "http://192.168.1.118:8080/api/status",
+                                data: events,
+                                cache: false,
+                                success: function(html) {
 
-                                    var events;
-
-                                    // AJAX code to submit form.
-                                    $.ajax({
-                                            type: "GET",
-                                            url: "http://192.168.1.118:8080/api/status",
-                                            data: events,
-                                            cache: false,
-                                            success: function(html) {
-
-                                                                   outdivy.innerHTML=html;
-
-
-
-
-                                               $.afui.loadContent("#inboxy",false,false,"fade");
+                                           outdivy.innerHTML=html;
 
 
 
 
-                                    }
-                                    });
+                                         $.afui.loadContent("#inboxy",false,false,"fade");
+
                                 }
-            function send() {
-           
-                                  
-                   $.ajax  ({
-                                  type: "POST",
-                                  url: "http://192.168.1.130:8080/RSVP_API/server1",
-                                  crossDomain:true, 
-                                  dataType: "json",
-                                  data:JSON.stringify({username: "Dennis", eventname:"gitday"})
-                            }).done(function ( data ) {
-                                      alert("ajax callback response:"+JSON.stringify(data));
-                         }) 
+                        });
+                }
+            
+        function send() {
 
-            }
+
+           $.ajax  ({
+                          type: "POST",
+                          url: "http://192.168.1.130:8080/RSVP_API/server1",
+                          crossDomain:true, 
+                          dataType: "json",
+                          data:JSON.stringify({username: "Dennis", eventname:"gitday"})
+                    }).done(function ( data ) {
+
+                              alert("ajax callback response:"+JSON.stringify(data));
+                      }) 
+
+        }
         </script>
     </head>
 
