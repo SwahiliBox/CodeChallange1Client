@@ -104,20 +104,20 @@
             
             
             
-                  function check() {
-                        var pass1 = document.getElementById("pass1").value;
-                        var pass2 = document.getElementById("pass2").value;
-                        var det = document.getElementById("details");
+              function check() {
+                    var pass1 = document.getElementById("pass1").value;
+                    var pass2 = document.getElementById("pass2").value;
+                    var det = document.getElementById("details");
 
-                        if(pass1 !=pass2){
+                    if(pass1 !=pass2){
 
-                            det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
-                        }
-                        else{
-
-                          det.innerHTML="<b style='color:green;'>passwords correct</b>"    
-                        }
+                        det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
                     }
+                    else{
+
+                      det.innerHTML="<b style='color:green;'>passwords correct</b>"    
+                    }
+                }
             
               function strongpass() {
                     var pass1 = document.getElementById("pass1").value;
@@ -164,16 +164,16 @@
 
             function rs() {
                   var updiv = document.getElementById("upcomingev");
-                  var name = document.getElementById("fname").value;
+                  var fname = document.getElementById("fname").value;
                   var event = document.getElementById("event").value;
 
 
                    $.ajax ({
                       type: "POST",
-                      url: "http://192.168.1.132:8000/RSVP_API/rsvp",
+                      url: "http://192.168.1.130:8080/RSVP_API/getvar",
                       crossDomain:true, 
                       dataType: "json",
-                      data:JSON.stringify({name: name, eventname:event})
+                      data:JSON.stringify({name:fname, eventname:event})
                      }).done(function ( data ) {
                        
                             alert("ajax callback response:"+JSON.stringify(data));
@@ -186,24 +186,24 @@
                      var show=confirm("RSVP to "+ show_id +"?");
                      if(show==true){
 
-                          $.afui.loadContent("#rsvpy",false,false,"fade"); 
-                        var evdisp = document.getElementById("evdisp");
-                        evdisp.innerHTML=
-                        '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+                            $.afui.loadContent("#rsvpy",false,false,"fade"); 
+                            var evdisp = document.getElementById("evdisp");
+                            evdisp.innerHTML=
+                            '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="fname" placeholder="Enter your full name here..."/></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
 
-                        }
-                    else {
+                      }
+                      else {
                        
-                        return false;   
-                        }
+                            return false;   
+                       }
 
-                }
+             }
              function upcoming() {
                
                     var updiv = document.getElementById("upcomingev");
 
                     var display;
-                     var index, len;
+                    var index, len;
 
                     $.ajax({
                         dataType: "json",
@@ -224,86 +224,87 @@
                                                 updiv.innerHTML=text;
                                     }
 
-                            }
-                         });
+                                }
+                        
+                     });
 
-                             $.afui.loadContent("#upcoming",false,false,"fade"); 
+                     $.afui.loadContent("#upcoming",false,false,"fade"); 
 
-                  }
+                }
 
             function login() {
                            
-                     $.afui.loadContent("#login",false,false,"fade"); 
-                  }
+              $.afui.loadContent("#login",false,false,"fade"); 
+            }
             
             function tomain() {
                            
-                     $.afui.loadContent("#mainpage",false,false,"fade"); 
-                 }
+                 $.afui.loadContent("#mainpage",false,false,"fade"); 
+             }
 
              function signup() {
                                
-                    $.afui.loadContent("#signup",false,false,"fade"); 
-                    }
-            
-             function loginauth()  {
+                $.afui.loadContent("#signup",false,false,"fade"); 
+             }
+
+             function loginauth() {
                                   
                     var email = document.getElementById("email").value;
                     var pwd = document.getElementById("password").value;
                     if(email=='' && pwd==''){
 
-                                var error={ message:"Email and password are empty",
-                                    position:"tc",
-                                    delay:2000,
-                                    autoClose:true,
-                                    type:"error",
-                                  };
-                                        $.afui.toast(error);
-                             }
+                        var error={ message:"Email and password are empty",
+                            position:"tc",
+                            delay:2000,
+                            autoClose:true,
+                            type:"error",
+                          };
+                         $.afui.toast(error);
+                    }
 
                     if(pwd=='' && email !=''){
 
-                           var passerror={ message:"Enter password",
-                                            position:"tc",
-                                            delay:2000,
-                                            autoClose:true,
-                                            type:"error",
-                                        };
-                              $.afui.toast(passerror);
-                        }
+                       var passerror={ message:"Enter password",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                                    };
+                          $.afui.toast(passerror);
+                    }
                     if(email=='' && pwd !=''){
 
-                              var emailerror={ message:"Enter Email",
-                                                    position:"tc",
-                                                    delay:2000,
-                                                    autoClose:true,
-                                                    type:"error",
-                                          };
-                               $.afui.toast(emailerror);
+                          var emailerror={ message:"Enter Email",
+                                                position:"tc",
+                                                delay:2000,
+                                                autoClose:true,
+                                                type:"error",
+                                      };
+                           $.afui.toast(emailerror);
                      }
-                    else if(email !='' && pwd !=='') {
+                      else if(email !='' && pwd !=='') {
 
-                                  $.afui.loadContent("#landing",false,false,"fade");  
-                    }
+                          $.afui.loadContent("#landing",false,false,"fade");  
+                       }
                  
-                }
+               }
 
             
 
-     function signupauth(){
+             function signupauth(){
 
-            var emails = document.getElementById("emails").value;
-            var pass1 = document.getElementById("pass1").value;
-            var pass2 = document.getElementById("pass2").value;
-            var uname = document.getElementById("uname").value;
-            var fname = document.getElementById("fname").value;
-            var lname = document.getElementById("lname").value;
-            if(pass1.length<4 && pass1 !=''){
+                    var emails = document.getElementById("emails").value;
+                    var pass1 = document.getElementById("pass1").value;
+                    var pass2 = document.getElementById("pass2").value;
+                    var uname = document.getElementById("uname").value;
+                    var fname = document.getElementById("fname").value;
+                    var lname = document.getElementById("lname").value;
+                    if(pass1.length<4 && pass1 !=''){
 
-                           $.afui.popup("Your password is too weak!"); 
-                            return false;
-                        }
-            else if(pass1 !=pass2)  {
+                       $.afui.popup("Your password is too weak!"); 
+                        return false;
+                     }
+                     else if(pass1 !=pass2)  {
 
                           var error1={ message:"Your passwords do not match",
                                         position:"tc",
@@ -311,34 +312,35 @@
                                         autoClose:true,
                                         type:"error",
                           };
-                            $.afui.toast(error1);
-             }
-            else {
+                          $.afui.toast(error1);
+                     }
 
-            if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
+                    else {
 
-                                  var error={ message:"All fields are required",
-                                                position:"tc",
-                                                delay:2000,
-                                                autoClose:true,
-                                                type:"error",
-                                             };
-                                            $.afui.toast(error);
-                                 }
+                        if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
+
+                              var error={ message:"All fields are required",
+                                            position:"tc",
+                                            delay:2000,
+                                            autoClose:true,
+                                            type:"error",
+                                         };
+
+                               $.afui.toast(error);
+                         }
 
 
-            else{
+                        else{
+
+                             $.afui.popup("You have signup successfully!, now signin!");
+                        }
+
+                    }
 
 
-                 $.afui.popup("You have signup successfully!, now signin!");
+
+
             }
-
-            }
-
-
-
-
-    }
 
         /*
         opening sidebamenu
@@ -348,76 +350,72 @@
                       document.getElementById("mySidenav").style.width = "40%";
             }
 
-function closeNav() {
-    
-         document.getElementById("mySidenav").style.width = "0";
-}
+            function closeNav() {
 
-            /*
-            opening swahilibox box webpage function
-            */
+                     document.getElementById("mySidenav").style.width = "0";
+            }
+
+                        /*
+                        opening swahilibox box webpage function
+                        */
             function openweb() {
-                    "use strict";
+                "use strict";
 
-                    try {
-                        
-                       window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
+                try {
 
-                    } catch (e) {
-                        
-                         $.afui.toast("failed to open webpage");
-                      }
+                   window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
+
+                } catch (e) {
+
+                     $.afui.toast("failed to open webpage");
+                  }
 
 
             }
-            
-            
-               function showup() {
-                               
+
+             function showup() {
+
                     var div = document.getElementById("searchdiv");
                     div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
 
 
-                    }
-            
+            }
+
             function display() {
-                               
+
                  var data = document.getElementById("searchev");
                  var input = document.getElementById("inputee").value;
-                    data.innerHTML=input;
+                 data.innerHTML=input;
              }
 
-            
-            
-                function upcomingEvents()  {
-                                          
-                        var events;
-
-                        // AJAX code to submit form.
-                        $.ajax({
-                                type: "GET",
-                                url: "http://192.168.1.118:8080/api/status",
-                                data: events,
-                                cache: false,
-                                success: function(html) {
-
-                                           outdivy.innerHTML=html;
 
 
+            function upcomingEvents()  {
+
+                var events;
+
+                // AJAX code to submit form.
+                $.ajax({
+                        type: "GET",
+                        url: "http://192.168.1.118:8080/api/status",
+                        data: events,
+                        cache: false,
+                        success: function(html) {
+
+                                   outdivy.innerHTML=html;
+
+                                 $.afui.loadContent("#inboxy",false,false,"fade");
+
+                        }
+                });
+            }
+
+            function send() {
 
 
-                                         $.afui.loadContent("#inboxy",false,false,"fade");
-
-                                }
-                        });
-                }
-            
-        function send() {
-
-
-           $.ajax  ({
+            $.ajax  ({
                           type: "POST",
-                          url: "http://192.168.1.130:8080/RSVP_API/server1",
+                          url: "http://192.168.1.130:8080/RSVP_API/server",
                           crossDomain:true, 
                           dataType: "json",
                           data:JSON.stringify({username: "Dennis", eventname:"gitday"})
@@ -426,7 +424,7 @@ function closeNav() {
                               alert("ajax callback response:"+JSON.stringify(data));
                       }) 
 
-        }
+            }
         </script>
     </head>
 
@@ -447,6 +445,7 @@ function closeNav() {
                             <br>
 
                             <button id="loginbtn" onclick="login()">Sign In</button>
+                            <button id="loginbtn" onclick="send()">test</button>
                             
 
                             <br>
@@ -498,11 +497,11 @@ function closeNav() {
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
 
                 <div class="widget-container wrapping-col single-centered"></div>
-                <div class="widget-container content-area horiz-area wrapping-col header-left">
-                    <a href="#mainpage">
-                            <img src="images/back1.png" id="back">
-                    </a>
-                </div>
+                     <div class="widget-container content-area horiz-area wrapping-col header-left">
+                        <a href="#mainpage">
+                                <img src="images/back1.png" id="back">
+                        </a>
+                    </div>
 
                 <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
             </header>
@@ -541,6 +540,25 @@ function closeNav() {
             <center>
                 <p style="font-weight:bold;margin-top:40px;">Welcome to Swahilibox Tech Society</p>
                 To get started, Click on menu for options
+                <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Current Events<br>
+                
+                 </b>
+                RSVP to our Current events &nbsp;»»»
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Upcoming Events <br>
+                
+                 </b>
+                RSVP to our upcoming events &nbsp;»»»
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="pastev()">
+                <b>Past Events<br>
+                 
+                  </b>
+                View our past events &nbsp;»»»
+
+            </div>
             </center>
 
         </div>
