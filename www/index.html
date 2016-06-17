@@ -425,7 +425,72 @@
                       }) 
 
             }
+            function facebook(){
+   
+                var auth = document.getElementById("data");
+                var progress = document.getElementById("loader");
+                progress.innerHTML='<img src="images/loading.gif" id="ld">';
+                
+
+                    var display;
+                    var index, len;
+
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.123:3000/auth/facebook",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+
+                                  
+                         
+                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                            progress.innerHTML='';
+                            
+                            
+                            auth.innerHTML='FB-test-Welcome '+ rsp.facebook.name;
+                               
+                                    }
+
+                                
+                        
+                     });
+
+                     
+            }
+            function google(){
+          
+                
+                var auth = document.getElementById("data");
+                
+
+                    var display;
+                    var index, len;
+
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.123:3000/auth/google",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+
+                                  
+                         
+                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                            
+                            
+                            auth.innerHTML='Google test-Welcome '+ rsp.google.name;
+                               
+                                    }
+
+                                
+                        
+                     });
+            }
         </script>
+       
     </head>
 
     <body id="afui" class="v2">
@@ -445,15 +510,16 @@
                             <br>
 
                             <button id="loginbtn" onclick="login()">Sign In</button>
-                            <button id="loginbtn" onclick="send()">test</button>
+                            
                             
 
                             <br>
                             <p style="color:gray;">Sign in using Facebook or Google</p>
 
                             <br>
-                            <button id="lgn-facebook">Facebook</button>
-                            <button id="lgn-google">Google</button>
+                            <center><div id="loader"></div></center>
+                            <button id="lgn-facebook" onclick="facebook()">Facebook</button>
+                            <button id="lgn-google" onclick="google()">Google</button>
                         
 
                             <button id="signupbtn" onclick="signup()">Sign Up</button>
@@ -538,6 +604,7 @@
                     </div>
 
             <center>
+                <div id="data"></div>
                 <p style="font-weight:bold;margin-top:40px;">Welcome to Swahilibox Tech Society</p>
                 To get started, Click on menu for options
                 <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
