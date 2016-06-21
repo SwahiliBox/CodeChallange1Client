@@ -291,56 +291,37 @@
 
             
 
-             function signupauth(){
-
-                    var emails = document.getElementById("emails").value;
+             function regdet(){
+                    var emails = document.getElementById("semail").value;
                     var pass1 = document.getElementById("pass1").value;
                     var pass2 = document.getElementById("pass2").value;
-                    var uname = document.getElementById("uname").value;
-                    var fname = document.getElementById("fname").value;
-                    var lname = document.getElementById("lname").value;
-                    if(pass1.length<4 && pass1 !=''){
+                    var username = document.getElementById("username").value;
+                    var firstname = document.getElementById("firstname").value;
+                    var surname = document.getElementById("surname").value;
+                 
 
-                       $.afui.popup("Your password is too weak!"); 
-                        return false;
-                     }
-                     else if(pass1 !=pass2)  {
+                      
+                            
+    var details='firstname='+ firstname + '&surname='+ surname + '&username='+ username + '&email='+emails+'&password='+pass1+'&password2='+pass2;
 
-                          var error1={ message:"Your passwords do not match",
-                                        position:"tc",
-                                        delay:2000,
-                                        autoClose:true,
-                                        type:"error",
-                          };
-                          $.afui.toast(error1);
-                     }
-
-                    else {
-
-                        if(emails==''||pass1==''||pass2==''||uname==''||fname==''||lname==''){
-
-                              var error={ message:"All fields are required",
-                                            position:"tc",
-                                            delay:2000,
-                                            autoClose:true,
-                                            type:"error",
-                                         };
-
-                               $.afui.toast(error);
-                         }
-
-
-                        else{
-
-                             $.afui.popup("You have signup successfully!, now signin!");
+                // AJAX code to submit form.
+                $.ajax({
+                        type: "POST",
+                        url: "http://192.168.1.123:3000/users/register",
+                        data: details,
+                        cache: false,
+                        success: function(html) {
+     $.afui.popup(html);
+                        }
+                });
                         }
 
-                    }
+                    
 
 
 
 
-            }
+            
 
         /*
         opening sidebamenu
@@ -429,7 +410,7 @@
    
                 var auth = document.getElementById("data");
                 var progress = document.getElementById("loader");
-                progress.innerHTML='<img src="images/loading.gif" id="ld">';
+                progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
                 
 
                     var display;
@@ -503,11 +484,14 @@
             <div class="pages">
                 <div class="upage-outer">
                     <div class="upage-content vertical-col panel ac0" id="uib_page_1">
+           
                         <center>
+                            
                             <img src="images/logo.jpg" id="logo">
                             <br>
                             <h1 id="name">SwahiliBox</h1>
                             <br>
+                               
 
                             <button id="loginbtn" onclick="login()">Sign In</button>
                             
@@ -517,7 +501,7 @@
                             <p style="color:gray;">Sign in using Facebook or Google</p>
 
                             <br>
-                            <center><div id="loader"></div></center>
+                            
                             <button id="lgn-facebook" onclick="facebook()">Facebook</button>
                             <button id="lgn-google" onclick="google()">Google</button>
                         
@@ -525,7 +509,8 @@
                             <button id="signupbtn" onclick="signup()">Sign Up</button>
 
                             <p style="color:gray;">Create your account</p>
-
+                                      
+<div id="loader" ></div>
                         </center>
 
                     </div>
@@ -572,15 +557,16 @@
                 <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
             </header>
             <center>
-                <input type="text" id="fname" placeholder="First Name">
-                <input type="text" id="lname" placeholder="Surname">
-                <input type="email" id="emails" placeholder="Enter Email">
-                <input type="text" id="uname" placeholder="Enter Username">
+                <input type="text" id="firstname" placeholder="First Name">
+                <input type="text" id="surname" placeholder="Surname">
+                <input type="text" id="semail" placeholder="Enter Email">
+            
+                <input type="text" id="username" placeholder="Enter Username">
                 <div id="str"></div>
                 <input type="password" onkeyup="strongpass()" id="pass1" placeholder="Enter password">
                 <div id="details"></div>
                 <input type="password" onkeyup="check()" id="pass2" placeholder="Confirm your password">
-                <input type="submit" value="Create Account" id="submitbtn" onclick="signupauth()">
+                <input type="submit" value="Create Account" id="submitbtn" onclick="regdet()">
             </center>
 
         </div>
