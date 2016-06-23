@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+    <!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="app_framework/3.0/af.ui.css" data-ver="2">
+        <link rel="stylesheet" type="text/css" href="app_framework/3.0/icons.min.css">
+        <title>Swahilibox App</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="lib/appframework/icons.css">
+        <link rel="stylesheet" type="text/css" href="lib/appframework/af.ui.css">
+        <link rel="stylesheet" href="css/design.css" type="text/css">
+
+        <script type="text/javascript" charset="utf-8" src="lib/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="lib/fastclick.min.js"></script>
+
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+       
+
+        <script type="text/javascript" src="js/drop.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="assets/js/main.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+        <script src="http://debug-software.intel.com/target/target-script-min.js#MKsEsaKLwNSSAcBAJGpI-CSJMMeCyNxtUYCVNBWKqf0"></script>
+
+        <!--
+  * The "meta viewport" tag (below) helps your app size appropriately to a device's ideal viewport.
+  * Note that Windows device viewports work better when initialized using the @viewport CSS rule.
+  * For a quick overview of "meta viewport" and @viewport, see this article:
+  *   http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag
+  * To see how it works, try your app on a real device with and without a "meta viewport" tag.
+  * Additional useful references include:
+  *   http://www.quirksmode.org/mobile/viewports.html
+  *   http://www.quirksmode.org/mobile/metaviewport/devices.html
+  *   https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
+-->
+
+        <!-- <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1"> -->
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
+
+        <style>
+            /* following three (cascaded) are equivalent to above three meta viewport statements */
+            /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html */
+            /* see http://dev.w3.org/csswg/css-device-adapt/ */
+                @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+                @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+                /*@-ms-viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }   @viewport { user-zoom: zoom ; min-zoom: 100% ; max-zoom: 200% ; }*/
+        </style>
+
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+
+        <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work below -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+        <!-- Recommended location for your JavaScript libraries -->
+        <!-- These library references (below) are just examples to give you the general idea... -->
+        <!-- <script src="lib/mc/hammer.js"></script> -->
+        <!-- <script src="lib/ft/fastclick.js"></script> -->
+
+        <!--
+  * cordova.js is a phantom lib for "Cordova HTML5 web app," it does nothing in a "Standard HTML5 web app"
+  * Seeing a "Failed to load resource: net::ERR_FILE_NOT_FOUND" message caused by this "cordova.js" script?
+  * The cordova.js script is required if you convert your "Standard HTML5" project into a "Cordova" project.
+  * You can safely ignore the error or comment out this line if you will not be developing a Cordova app.
+-->
+        <script src="cordova.js" id="xdkJScordova_"></script>
+
+        <script src="js/app.js"></script>
+        <!-- for your event code, see README and file comments for details -->
+        <script src="js/init-app.js"></script>
+        <!-- for your init code, see README and file comments for details -->
+        <script src="xdk/init-dev.js"></script>
+        <!-- normalizes device and document ready events, see file for details -->
+        <!--            
+            You may substitute jQuery for the App Framework selector library.
+            See http://app-framework-software.intel.com/documentation.php#afui/afui_jquery
+        -->
+        <script type="application/javascript" src="lib/jquery.min.js"></script>
+        <script type="application/javascript" src="app_framework/3.0/appframework.ui.min.js"></script>
+        <script type="application/javascript">
+            $.afui.autoLaunch = false; //By default, it is set to true and you're app will run right away.  We set it to false to show a splashscreen
+            /* This function runs when the content is loaded.*/
+            $.afui.useOSThemes=false;
+             $(document).ready(function(){
+                setTimeout(function(){
+                    $.afui.launch();
+                },1500);
+            });
+            
+            
+            
+            
+              function check() {
+                    var pass1 = document.getElementById("pass1").value;
+                    var pass2 = document.getElementById("pass2").value;
+                    var det = document.getElementById("details");
+
+                    if(pass1 !=pass2){
+
+                        det.innerHTML="<b style='color:red;'>Password Mismatch...</b>"    
+                    }
+                    else{
+
+                      det.innerHTML="<b style='color:green;'>passwords correct</b>"    
+                    }
+                }
+            
+            
+              function strongpass() {
+                    var pass1 = document.getElementById("pass1").value;
+
+                    var stronger = document.getElementById("str");
+
+                    if(pass1.length<4){
+
+                        stronger.innerHTML="<b style='color:red;'>weak</b>"    
+                    }
+                    else if(pass1.length<6){
+
+                         stronger.innerHTML="<b style='color:orange;'>medium</b>"    
+                    }
+                    else{
+
+                         stronger.innerHTML="<b style='color:green;'>Strong</b>"    
+                    }
+              }
+
+           
+             function events(){
+                            
+                 $.afui.loadContent("#events",false,false,"fade"); 
+             }
+             function aboutus() {
+                               
+                 $.afui.loadContent("#aboutus",false,false,"fade"); 
+             }
+             function home(){
+                            
+                 $.afui.loadContent("#landing",false,false,"fade"); 
+             }
+            
+             function homeev(){
+                                
+                $.afui.loadContent("#landing",false,false,"fade"); 
+             }
+            
+             function pastev() {
+                               
+                 $.afui.loadContent("#pastev",false,false,"fade"); 
+             }
+
+            function rs() {
+                  var updiv = document.getElementById("upcomingev");
+                  var full_name = document.getElementById("full_name").value;
+                  var event = document.getElementById("event").value;
+                         if(full_name=='' ){
+
+                        var error={ message:"Your full name is required",
+                            position:"tc",
+                            delay:2000,
+                            autoClose:true,
+                            type:"error",
+                          };
+                         $.afui.toast(error);
+                   
+                         
+                       $.ajax ({
+                          type: "POST",
+                          url: "http://192.168.1.130:7000/RSVP_API/server",
+                          crossDomain:true, 
+                          dataType: "json",
+                          data:JSON.stringify({username:full_name, eventname:event})
+                         }).done(function ( data ) {
+
+                                alert("ajax callback response:"+JSON.stringify(data));
+
+                            })
+                           return false;
+                             
+                    }         
+                         var status= alert("We are working to make this happen");
+
+                          $.afui.loadContent("#upcomingev",false,false,"fade");
+                       
+                  
+            }
+            function eventListener(show_id) {
+                                       
+                     var show=confirm("RSVP to "+ show_id +"?");
+                     if(show==true){
+
+                            $.afui.loadContent("#rsvpy",false,false,"fade"); 
+                            var evdisp = document.getElementById("evdisp");
+                            evdisp.innerHTML=
+                            '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="full_name" required placeholder="Enter your full name here..."/></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+
+                      }
+                      else {
+                       
+                            return false;   
+                       }
+
+             }
+             function upcoming() {
+               
+                    var updiv = document.getElementById("upcomingev");
+
+                    var display;
+                    var index, len;
+
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.128:8080/events",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+
+                                    var text = "";
+                                    var i;
+                                    for (i = 0; i < rsp.length; i++) {
+
+
+                                                 var title=rsp[i].title;
+                                                          text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br>' + rsp[i].description + '<br><b style="color:blue;">' + rsp[i].date  +'</b>&nbsp;&nbsp;RSVP >>></div><br>';
+
+                                                updiv.innerHTML=text;
+                                    }
+
+                                }
+                        
+                     });
+
+                     $.afui.loadContent("#upcoming",false,false,"fade"); 
+
+                }
+
+            function login() {
+                           
+              $.afui.loadContent("#login",false,false,"fade"); 
+            }
+            
+            function tomain() {
+                           
+                 $.afui.loadContent("#mainpage",false,false,"fade"); 
+             }
+
+             function signup() {
+                               
+                $.afui.loadContent("#signup",false,false,"fade"); 
+             }
+
+             function loginauth() {
+                                  
+                    var email = document.getElementById("email").value;
+                    var pass1= document.getElementById("password").value;
+                    var auth = document.getElementById("data");
+                    if(email=='' && pass1==''){
+
+                        var error={ message:"Email and password are empty",
+                            position:"tc",
+                            delay:2000,
+                            autoClose:true,
+                            type:"error",
+                          };
+                         $.afui.toast(error);
+                    }
+
+                    if(pass1=='' && email !=''){
+
+                       var passerror={ message:"Enter password",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                                    };
+                          $.afui.toast(passerror);
+                    }
+                    if(email=='' && pass1 !=''){
+
+                          var emailerror={ message:"Enter Email",
+                                                position:"tc",
+                                                delay:2000,
+                                                autoClose:true,
+                                                type:"error",
+                                      };
+                           $.afui.toast(emailerror);
+                     } 
+                  
+                      else if(email !='' && pass1 !=='') {
+                         var details='&username='+ email + '&password='+pass1;
+                                               
+                                  $.ajax({
+
+                                        type: "POST",
+                                        url: "http://192.168.1.100:3000/users/login",
+                                        data: details,
+                                        cache: false,
+                                        success: function(data) {
+                                                    var num=data;
+                                                    if(num==1){
+                                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                                                         auth.innerHTML='Welcome '+ email;
+
+                                                    } else{
+
+                                                         $.afui.toast("Invalid username or password!");
+                                                    }
+
+                                           }
+
+
+
+                                });      
+
+                             return false;
+
+                         
+                       }
+                 
+               }
+
+            
+
+             function regdet(){
+                    var emails = document.getElementById("semail").value;
+                    var pass1 = document.getElementById("pass1").value;
+                    var pass2 = document.getElementById("pass2").value;
+                    var username = document.getElementById("username").value;
+                    var firstname = document.getElementById("firstname").value;
+                    var surname = document.getElementById("surname").value;  
+                   if(pass1.length<4 && pass1 !=''){
+
+                       $.afui.popup("Your password is too weak!"); 
+                        return false;
+                     }
+                     else if(pass1 !=pass2)  {
+
+                          var error1={ message:"Your passwords do not match",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                          };
+                          $.afui.toast(error1);
+                     }
+
+                    else {
+                        
+                        if(emails==''||pass1==''||pass2==''||username==''||firstname==''||surname==''){
+
+                              var error={ message:"All fields are required",
+                                            position:"tc",
+                                            delay:2000,
+                                            autoClose:true,
+                                            type:"error",
+                                         };
+
+                               $.afui.toast(error);
+                         }
+
+
+                        else{
+
+                             var details='firstname='+ firstname + '&surname='+ surname + '&username='+ username + '&email='+emails+'&password='+pass1+'&password2='+pass2;
+
+                            // AJAX code to submit form.
+                            $.ajax({
+                                    type: "POST",
+                                    url: "http://192.168.1.123:3000/users/register",
+                                    data: details,
+                                    cache: false,
+                                    success: function(html) {
+                                        var show=confirm("You have registered successfuly! You can now signin");
+                                       if(show==true){
+
+                                        $.afui.loadContent("#mainpage",false,false,"fade"); 
+                                       }
+
+                                    }
+                            });
+                      }
+
+                    }
+
+
+                            
+                
+        }
+
+                    
+
+
+
+
+            
+
+        /*
+        opening sidebamenu
+        */
+            
+            function openNav() {
+                      document.getElementById("mySidenav").style.width = "40%";
+            }
+
+            function closeNav() {
+
+                     document.getElementById("mySidenav").style.width = "0";
+            }
+
+                        /*
+                        opening swahilibox box webpage function
+                        */
+            function openweb() {
+                "use strict";
+
+                try {
+
+                   window.open('http://swahilibox.co.ke', '_blank', 'location=yes');
+
+                } catch (e) {
+
+                     $.afui.toast("failed to open webpage");
+                  }
+
+
+            }
+
+             function showup() {
+
+                    var div = document.getElementById("searchdiv");
+                    div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
+
+
+            }
+
+            function display() {
+
+                 var data = document.getElementById("searchev");
+                 var input = document.getElementById("inputee").value;
+                 data.innerHTML=input;
+             }
+
+
+
+            function upcomingEvents()  {
+
+                var events;
+
+                // AJAX code to submit form.
+                $.ajax({
+                        type: "GET",
+                        url: "http://192.168.1.118:8080/api/status",
+                        data: events,
+                        cache: false,
+                        success: function(html) {
+
+                                   outdivy.innerHTML=html;
+
+                                 $.afui.loadContent("#inboxy",false,false,"fade");
+
+                        }
+                });
+            }
+
+            
+            function facebook(){
+   
+                var auth = document.getElementById("data");
+                var progress = document.getElementById("loader");
+                progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
+                
+
+                    var display;
+                    var index, len;
+
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.123:3000/auth/facebook",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+
+                                  
+                         
+                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                            progress.innerHTML='';
+                            
+                            
+                            auth.innerHTML='Welcome '+ rsp.facebook.name;
+                               
+                                    }
+
+                                
+                        
+                     });
+
+                     
+            }
+            function google(){
+          
+                
+                var auth = document.getElementById("data");
+                
+
+                    var display;
+                    var index, len;
+
+                    $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.123:3000/auth/google",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+
+                                  
+                         
+                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                            
+                            
+                            auth.innerHTML='Welcome '+ rsp.google.name;
+                               
+                                    }
+
+                                
+                        
+                     });
+            }
+            function social_share() {  
+
+                //Parameters:
+                //Message, Subject, File Path(relative, File URL or file://), URL, success callback, fail callback 
+                window.plugins.socialsharing.share("Blog Post Title","Post Summery",null,"http://qnimate.com",function(result){
+                    alert('result: ' + result);
+                }, function(result){
+                    alert('error: ' + result);
+                });
+            }
+        </script>
+       
+    </head>
+
+    <body id="afui" class="v2">
+
+        <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
+        <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work above -->
+        <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
+
+        <div class="upage vertical-col left view" id="mainpage" data-header="none" data-footer="none" data-trasnsition="pop" style="color:black;">
+            <div class="pages">
+                <div class="upage-outer">
+                    <div class="upage-content vertical-col panel ac0" id="uib_page_1">
+           
+                        <center>
+                            
+                            <img src="images/logo.jpg" id="logo">
+                            <br>
+                            <h1 id="name">SwahiliBox</h1>
+                            <br>
+                               
+
+                            <button id="loginbtn" onclick="login()">Sign In</button>
+                            
+                            
+
+                            <br>
+                            <p style="color:gray;">Sign in using Facebook or Google</p>
+
+                            <br>
+                            
+                            <button id="lgn-facebook" onclick="facebook()">Facebook</button>
+                            <button id="lgn-google" onclick="google()">Google</button>
+                        
+
+                            <button id="signupbtn" onclick="signup()">Sign Up</button>
+
+                            <p style="color:gray;">Create your account</p>
+                                      
+<div id="loader" ></div>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="upage vertical-col left view" id="login" data-header="af-header-0" data-footer="none">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#FAFA08;">
+
+                    <h1 style="color:black;margin-top:3px;">Login</h1>
+                    <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col header-left">
+                           <a href="#mainpage">
+                                   <img src="images/back1.png" id="back">
+                           </a>
+                    </div>
+
+                    <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
+            </header>
+            <center>      
+                         <input type="text" id="email" placeholder="Enter email or Username">
+                        <input type="password" id="password" placeholder="Enter password">
+                        <input type="submit" id="submitbtn" onclick="loginauth()">
+            </center>
+
+        </div>
+
+        <div class="upage vertical-col left view" id="signup" data-header="af-header-0" data-footer="none" style="background:white;">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#FAFA08;">
+
+                <h1 style="color:black;margin-top:3px;">Signup</h1>
+                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+                <div class="widget-container wrapping-col single-centered"></div>
+                     <div class="widget-container content-area horiz-area wrapping-col header-left">
+                        <a href="#mainpage">
+                                <img src="images/back1.png" id="back">
+                        </a>
+                    </div>
+
+                <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
+            </header>
+            <center>
+                <input type="text" id="firstname" placeholder="First Name">
+                <input type="text" id="surname" placeholder="Surname">
+                <input type="email" required id="semail" placeholder="Enter Email">
+            
+                <input type="text" id="username" placeholder="Enter Username">
+                <div id="str"></div>
+                <input type="password" onkeyup="strongpass()" id="pass1" placeholder="Enter password">
+                <div id="details"></div>
+                <input type="password" onkeyup="check()" id="pass2" placeholder="Confirm your password">
+                <input type="submit" value="Create Account" id="submitbtn" onclick="regdet()">
+            </center>
+
+        </div>
+        <div class="upage vertical-col left view" id="landing" data-header="none" data-footer="none" style="background:white;">
+                    <div style="background:#FAFA08;">
+
+                        <span onclick="openNav()"><button style="margin-top:10px;background-color:;"><img src="images/menu1.png" height="30px" width="40px"></button></span>
+
+                        <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                        <div id="mySidenav" class="sidenav">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">←</a>
+                                <a href="#" onclick="closeNav()" id="info"><img src="images/home.png" height="30px" width="30px">&nbsp;Home &nbsp;&nbsp;&nbsp;»</a>
+                                <br>
+                               <!-- <a href="#events" onclick="closeNav()">Events &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;»</a>
+                                <br>
+                                <a href="#rsvp" onclick="closeNav()">RSVP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;»</a>
+                                <br>
+                            <a href="#" onclick="closeNav()">App &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;»</a><br>-->
+                                 <a href="#about" onclick="closeNav()" id="info"><img src="images/info_g.png" height="30px" width="30px">&nbsp; About&nbsp;»</a>
+                                <br>
+                             <a href="#mainpage" onclick="closeNav()"><img src="images/delete_01.png" height="30px" width="30px"> &nbsp;Exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;»</a>
+                             <a href="#mainpage" onclick="social_share()"><img src="images/share.png" height="30px" width="30px">&nbsp; Share&nbsp;&nbsp;&nbsp;»</a>
+                        </div>
+                    </div>
+
+            <center>
+                <div id="data"></div>
+                <p style="font-weight:bold;margin-top:40px;">Welcome to Swahilibox Tech Society</p>
+                To get started, Click on menu for options
+                <br>
+                <br>
+                <!--
+                <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Current Events<br>
+                
+                 </b>
+                RSVP to our Current events &nbsp;»»»
+            </div>-->
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Upcoming Events <br>
+                
+                 </b>
+                RSVP to our upcoming events &nbsp;»»»
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="pastev()">
+                <b>Past Events<br>
+                 
+                  </b>
+                View our past events &nbsp;»»»
+
+            </div>
+            </center>
+
+        </div>
+        <div class="upage vertical-col left view" id="about" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#FAFA08;">
+
+                  <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                <div class="widget-container content-area horiz-area wrapping-col header-left">
+                    <a onclick="home()">
+                        <img src="images/back1.png" id="back">
+                    </a>
+                </div>
+
+            </div>
+
+            <center>
+                <p style="font-family:sans serif;font-size:17px;">
+                    SwahiliBox is a project of M-Power (CBO). The Technology Open Space in Mombasa, Kenya which focuses on socio-economic technology empowerment, inspiring and developing individuals and help them develop new and innovative ideas through networking, access
+                    to training and support and professional mentoring and coaching. It brings together investors, donors, entrepreneurs, experts, artists, and other individuals and provides them with an opportunity to share knowledge, learn, find mentors
+                    and expound on their talents, abilities and innovative ideas that will lead to the development of Kenya and globally at large.
+                </p>
+                <div style="background:#1C1C1C;">
+
+                    <img src="images/lg.png">
+                </div>
+                <br>
+                <p font-weight:bold;="">For more information visit our website at</p>
+                <button onclick="openweb()" style="width:50%;height:30px;border-radius:4px;background:#DF7401;color:white;border:solid 1px gray;">www.swahilibox.co.ke</button>
+            </center>
+
+        </div>
+      <!--
+        <div class="upage vertical-col left view" id="events" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#FAFA08;">
+
+                <dl class="dropdown">
+                    <dt id="one-ddheader" onclick="home()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
+
+                </dl>
+
+                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Current Events<br>
+                
+                 </b>
+                RSVP to our Current events &nbsp;»»»
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
+                <b>Upcoming Events <br>
+                
+                 </b>
+                RSVP to our upcoming events &nbsp;»»»
+            </div>
+            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="pastev()">
+                <b>Past Events<br>
+                 
+                  </b>
+                View our past events &nbsp;»»»
+
+            </div>
+
+        </div>-->
+        <div class="upage vertical-col left view" id="pastev" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#FAFA08;">
+
+                <dl class="dropdown">
+                    
+                    <dt id="one-ddheader" onclick="homeev()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
+
+                </dl>
+
+                <div id="searchdiv" style="float:left;height:20px;width:80%;">
+                    <div onclick="showup()" style="margin-top:10px;color:white;float:right;border-radius:10px;background:orange;color:white;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;">Search event</div>
+                </div>
+
+            </div>
+            <div id="searchev">
+                past events will be diplayed here...
+            </div>
+
+        </div>
+        <div class="upage vertical-col left view" id="upcoming" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#FAFA08;">
+                <dl class="dropdown">
+                    <dt id="one-ddheader" onclick="homeev()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
+
+                </dl>
+
+                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+            </div>
+            <br>
+            <br>
+            <div id="upcomingev">
+                 Upcoming events will be displayed here....
+
+            </div>
+           
+        </div>
+        <div class="upage vertical-col left view" id="aboutus" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#FAFA08;">
+                <dl class="dropdown">
+                    <dt id="one-ddheader" onclick="home()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
+
+                </dl>
+
+                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+            </div>
+            About Swahilibox will be here...
+
+        </div>
+        
+         <div class="upage vertical-col left view" id="rsvpy" data-header="none" data-footer="none" style="background:white;color:black;">
+              <div style="background:#FAFA08;">
+                    <dl class="dropdown">
+                        <dt id="one-ddheader" ><a href="#events"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></a></dt>
+
+                    </dl>
+
+                    <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+
+            </div>
+            <div id="evdisp" >
+             
+            </div>
+        </div>
+        <div class="upage view" id="uib_page_2" data-header="none" data-footer="af-footer-0">
+            <div class="pages">
+                <div class="upage-content vertical-col left panel ac0" id="uib_page_3"></div>
+            </div>
+            <div class="upage-outer">
+                <div class="upage-content ac0 content-area vertical-col left"></div>
+            </div>
+            <footer class="outer-element uib_w_2" data-uib="app_framework/footer" data-ver="2" id="af-footer-0">
+            </footer>
+        </div>
+
+    </body>
+
+</html>
