@@ -163,23 +163,78 @@
                  $.afui.loadContent("#pastev",false,false,"fade"); 
              }
 
-            function rs() {
+            function rs(show_title) {
+                
+                        var event_title=show_title;
+                
+                     var rsvp_title=alert("RSVP to "+ show_title +"? <br><input >");
+                     $.afui.loadContent("#formdata",false,false,"fade"); 
+                   
+                        
+                            var evdisp = document.getElementById("contactform");
+                            evdisp.innerHTML= 
+                           ' First Name:<input id="fusername" type="text"/><br>Last Name:<input id="lusername" type="text"/><br>Mobile No:<input id="userphone" type="text"/><button id="reserve" name=" '+ event_title +'" onclick="rsvp_user(this.name)">RSVP NOW</button>';
+                /*
+                     var rsvp_title=show_title;
                   var updiv = document.getElementById("upcomingev");
-                  var full_name = document.getElementById("full_name").value;
-                  var event = document.getElementById("event").value;   
-                    if(full_name==''){
-                        var nameerror={ message:"All fields are required",
-                                            position:"tc",
-                                            delay:2000,
-                                            autoClose:true,
-                                            type:"error",
-                                         };
-                                        $.afui.toast(nameerror);
                  
-                        }
-                     else{
-                                      
-                              var rsvp='&username='+ full_name + '&eventname='+ event;
+                  var event = document.getElementById("event").value;   */
+                    
+                                     
+                             
+          
+            }
+             function rsvp_user(event_title2){
+                         var evt_title=event_title2;
+                         var fusername = document.getElementById("fusername").value;
+                         var lusername= document.getElementById("lusername").value;
+                         var userphone = document.getElementById("userphone").value;
+                         
+                         
+                             if(fusername=='' && lusername=='' && userphone==''){
+
+                        var error={ message:"All fieled are required",
+                            position:"tc",
+                            delay:2000,
+                            autoClose:true,
+                            type:"error",
+                          };
+                         $.afui.toast(error);
+                    }
+
+                    if(fusername=='' && lusername !==''&& userphone !==''){
+
+                       var passerror={ message:"Enter First Name",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                                    };
+                          $.afui.toast(passerror);
+                    }
+                    if(lusername=='' && fusername !=='' && userphone!==''){
+
+                          var emailerror={ message:"Enter Last Name",
+                                                position:"tc",
+                                                delay:2000,
+                                                autoClose:true,
+                                                type:"error",
+                                      };
+                           $.afui.toast(emailerror);
+                     } 
+                     if(userphone=='' && fusername !=='' && userphone!==''){
+
+                          var emailerror={ message:"Enter Phone No",
+                                                position:"tc",
+                                                delay:2000,
+                                                autoClose:true,
+                                                type:"error",
+                                      };
+                           $.afui.toast(emailerror);
+                     } 
+                  
+                      else if(lusername !=='' && fusername !=='' && userphone !=='') {
+                         var rsvp='&firstname='+fusername  + '&lastname='+ lusername + '&phonenumber='+ userphone +  '&eventname='+ evt_title;
                                // AJAX code to submit form.
                                 $.ajax({
                                         type: "POST",
@@ -193,21 +248,59 @@
                                            }
 
 
-                                });
-                     }
-                   
-            }
-                       
+                                });      
+
+                             return false;
+
+                         
+                       }
+                 
+                     
+             }          
                   
             
             function eventListener(show_id) {
-                                       
-                    
+                      var id=show_id;
+                     $.afui.toast(id);
+                                $.ajax({
+                        dataType: "json",
+                        data: display,
+                        url: "http://192.168.1.123:3000/events",
+                        cache: false,
+                        method: 'GET',
+                        success: function(rsp) {
+                             var i;
+                             var venue;
+                             var desc;
+                             var evt_time;
+                             var evt_date;
+                             var event_id;
 
+                           for(var i = 0 ; i < rsp.length; ++i) {
+                                if( rsp[i].title == id) {
+                                    
+                                    var title= rsp[i].title;
+                                    venue= rsp[i].venue;
+                                    desc = rsp[i].desc;
+                                    evt_date= rsp[i].date;
+                                    evt_time = rsp[i].time;
+                                    enent_id = rsp[i]._id;
+                                   
+                                    
                             $.afui.loadContent("#rsvpy",false,false,"fade"); 
                             var evdisp = document.getElementById("evdisp");
-                            evdisp.innerHTML=
-                            '<b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr><center><input type="text" id="event" value="'+ show_id +'" style ="visibility:hidden"><br>Enter your full name<br><input type="text" id="full_name" required placeholder="Enter your full name here..."  ></br><button id="reserve" onclick="rs()">RSVP NOW</button></center>';
+                            evdisp.innerHTML= 
+                           '<div style=" box-shadow: 0px 0px 3px black" ><b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr>'+ desc +'<br><b>venue:</b>'+ venue +'<br><b>Date:</b>'+ evt_date +'<em>'+ evt_time +'</em></div><center><button id="reserve" name=" '+ title +'" onclick="rs(this.name)">RSVP THE EVENT</button></center>';
+                                }
+                               
+                           
+                               
+                            }
+                        }
+                                       
+                            });
+
+                           
 
                       
 
@@ -234,7 +327,7 @@
 
                                                  var title=rsp[i].title;
                                                  var desc=rsp[i].desc;
-                                                          text +='<div style="width:100%;height:auto;background:lightblue;border-radius:3px;" id="'+ title + '<br>'+ desc + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br><b style="color:blue;">' + rsp[i].date  + rsp[i].time +'</b>&nbsp;&nbsp;RSVP >></div><br>';
+                                                          text +='<div style="width:100%;height:auto;background:#FFFFFF;border-radius:3px; box-shadow: 0px 0px 4px black" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br><b style="color:blue;">' + rsp[i].date  + rsp[i].time +'</b></div><hr> &nbsp;';
 
                                                 updiv.innerHTML=text;
                                     }
@@ -301,26 +394,28 @@
                   
                       else if(email !='' && pass1 !=='') {
                          var details='&username='+ email + '&password='+pass1;
-                                           $.afui.loadContent("#landing",false,false,"fade"); 
-                                            
-                                             var homename=upcoming ();
-                                             auth.innerHTML=homename;
+                                       $.afui.loadContent("#landing",false,false,"fade");      
     
                                   $.ajax({
 
                                         type: "POST",
-                                        url: "http://192.168.1.100:3000/users/login",
+                                        url: "http://192.168.1.123:3000/login",
                                         data: details,
                                         cache: false,
                                         success: function(data) {
                                                     var num=data;
-                                                    if(num==1){
-                                                        $.afui.loadContent("#landing",false,false,"fade"); 
-                                                         auth.innerHTML='Welcome '+ email;
-
+                                                    if(num ==1){
+                                                       
+                                                         $.afui.toast("Invalid username or password!");         
                                                     } else{
-
-                                                         $.afui.toast("Invalid username or password!");
+                                                        
+                                                            $.afui.loadContent("#landing",false,false,"fade"); 
+                                                            var homename=upcoming ();
+                                                            auth.innerHTML=homename;
+                                                       
+                                                        
+                                                        
+                                                         
                                                     }
 
                                            }
@@ -394,18 +489,25 @@
                             // AJAX code to submit form.
                             $.ajax({
                                     type: "POST",
-                                    url: "http://192.168.1.123:3000/users/register",
+                                    url: "http://192.168.1.123:3000/register",
                                     data: details,
                                     cache: false,
                                     success: function(html) {
-                                        var show=confirm("You have registered successfuly! You can now signin");
-                                       if(show==true){
+                                         var num=html;
+                                        $.afui.toast(num);
+                                            if( num !==1){
+                                                $.afui.loadContent("#landing",false,false,"fade"); 
+                                                 auth.innerHTML='Welcome '+ email;
 
-                                        $.afui.loadContent("#mainpage",false,false,"fade"); 
-                                       }
+                                            } else{
+
+                                                 $.afui.toast("Such username already exist! Please choose another name or sign in.");
+                                            }
 
                                     }
                             });
+                                
+                             return false;
                           }
                         }
 
@@ -610,7 +712,7 @@
 
                 //Parameters:
                 //Message, Subject, File Path(relative, File URL or file://), URL, success callback, fail callback 
-                window.plugins.socialsharing.share("Swahilibox","Download Swahilibox app",null,"http://qnimate.com",function(result){
+                window.plugins.socialsharing.share("Swahilibox","Download Swahilibox app",null,"http:/om",function(result){
                     alert('result: ' + result);
                 }, function(result){
                     alert('error: ' + result);
@@ -675,7 +777,7 @@
         </div>
 
         <div class="upage vertical-col left view" id="login" data-header="af-header-0" data-footer="none">
-            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:blue;">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#9E9E9E;">
 
                     <h1 style="color:black;margin-top:3px;">Login</h1>
                     <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
@@ -692,13 +794,13 @@
             <center>      
                          <input type="text" id="email" placeholder="Enter email or Username">
                         <input type="password" id="password" placeholder="Enter password">
-                        <input type="submit" id="submitbtn" onclick="loginauth()">
+                        <input type="submit" id="submitbtn" value="Login" onclick="loginauth()">
             </center>
 
         </div>
 
         <div class="upage vertical-col left view" id="signup" data-header="af-header-0" data-footer="none" style="background:white;">
-            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:blue;">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#9E9E9E;">
 
                 <h1 style="color:black;margin-top:3px;">Signup</h1>
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
@@ -727,17 +829,17 @@
 
         </div>
         <div class="upage vertical-col left view" id="landing" data-header="none" data-footer="none" style="background:white;">
-                    <div style="background:green;">
+                    <div style="background:#9E9E9E;">
 
                         <span onclick="openNav()"><button style="margin-top:10px;background-color:;"><img src="images/menu1.png" height="30px" width="40px"></button></span>
-
+                             <b>Upcoming Events</b>
                         <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                         <div id="mySidenav" class="sidenav">
                               
                          <div class="panel active" id="navPage1" data-title="Foobar">
                         <ul class="list">
                             
-                            <li style="background:black"><a href="#" onclick="closeNav()"> <img src="images/lg.png" style="float:;height:px;width:px;" id=""></a></li>
+                            <li style="background:#9E9E9E"><a href="#" onclick="closeNav()"> <img src="images/lg.png" style="float:;height:px;width:px;" id=""></a></li>
                             <li><a href="#landing" onclick="closeNav()" id="info"><span class="icon home"></span>Home</a></li>
                             
                             <li><a href="#about" onclick="closeNav()">Swahilibox</a></li>
@@ -749,7 +851,7 @@
                     </div>
 
             <center>
-               
+                <div id=""></div>
             </center>
             <div id="upcomingev">
                  Upcoming events will be displayed here....
@@ -758,7 +860,7 @@
 
         </div>
         <div class="upage vertical-col left view" id="about" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:green;">
+            <div style="background:#9E9E9E;">
 
                   <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
@@ -775,7 +877,7 @@
                     to training and support and professional mentoring and coaching. It brings together investors, donors, entrepreneurs, experts, artists, and other individuals and provides them with an opportunity to share knowledge, learn, find mentors
                     and expound on their talents, abilities and innovative ideas that will lead to the development of Kenya and globally at large.
                 </p>
-                <div style="background:#1C1C1C;">
+                <div style="background:#BDBDBD;">
 
                     <img src="images/lg.png">
                 </div>
@@ -819,7 +921,7 @@
 
         </div>-->
         <div class="upage vertical-col left view" id="app" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:blue ;">
+            <div style="background:#9E9E9E ;">
 
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
@@ -832,22 +934,28 @@
             <div id="searchev">
                
                 <center><img src="images/logo.jpg" height="100px" width="100px"><br>
-                version 0.1</center>
+                version 0.1
                 <br>
                 
                     
-                    <a href="" onclick="browsefacebook()"><img src="images/facebook.png" height="42px" width="42px">Like us on facebook</a>
+                    <button style="background:white"> 
+                      <a href="" onclick="browsefacebook()"><img src="images/facebook.png" height="22px" width="22px">Like us on facebook</a></button>
                 <br>
-                <hr>
+                <br>
                 
-                    <a href="" onclick="browsetwitter()" ><img src="images/twitter.png" height="42" width="42">Follow us on twitter</a>
+                
+                    <button style="background:white">
+                        <a href="" onclick="browsetwitter()" ><img src="images/twitter.png" height="22" width="22">Follow us on twitter</a>
+                </button>
                 <br>
-                <hr>
+                <br>
+                
                     
-             <a href="" onclick="email_share()"><img src="images/email.jpg" height="42" width="42">Contact us<br><em>info@swahilibox.com</em></a>
+            <button style="background:white"> 
+                <a href="" onclick="email_share()"><img src="images/email.jpg" height="22" width="22">Contact us<br><em>info@swahilibox.com</em></a></button>
                 <br>
-                <hr>
                 
+                </center>
             </div>
 
         </div>
@@ -870,28 +978,28 @@
             </div>
            
         </div>-->
-        <div class="upage vertical-col left view" id="aboutus" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#FAFA08;">
-                <dl class="dropdown">
-                    <dt id="one-ddheader" onclick="home()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
-
-                </dl>
-
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+        <div class="upage vertical-col left view" id="formdata" data-header="none" data-footer="none" style="background:white;">
+            <div style="background:#9E9E9E;">
+                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                <div class="widget-container content-area horiz-area wrapping-col header-left">
+                    <a onclick="home()">
+                        <img src="images/back1.png" id="back">
+                    </a>
+                </div>
 
             </div>
-            About Swahilibox will be here...
-
+            Please provide us with your contact
+            <div id="contactform"></div>
         </div>
         
          <div class="upage vertical-col left view" id="rsvpy" data-header="none" data-footer="none" style="background:white;color:black;">
-              <div style="background:#FAFA08;">
-                    <dl class="dropdown">
-                        <dt id="one-ddheader"  ><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;" onclick="home()" >⇐</button></dt>
-                         
-                    </dl>
-
-                    <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+              <div style="background:#9E9E9E;">
+                  <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                <div class="widget-container content-area horiz-area wrapping-col header-left">
+                    <a onclick="home()">
+                        <img src="images/back1.png" id="back">
+                    </a>
+                </div>
 
             </div>
             <div id="evdisp" >
