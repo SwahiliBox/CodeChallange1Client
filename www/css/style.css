@@ -21,6 +21,10 @@ width: 96%;margin-top:10px;
 {
     width: 42px;height: 42px;border-radius:50%;
 }
+#contact{
+    padding-left: 40px;
+    border-radius:3px;box-shadow: 0px 0px 2px black;color;
+}
 #name
 {
     font-family: times new romans;color:black;text-shadow:0px 0px 3px whitesmoke;font-size: 40px;
@@ -31,11 +35,11 @@ width: 96%;margin-top:10px;
 }
 #lgn-google
 {
-    width:40%;height: 35px;border-radius:3px;box-shadow: 0px 0px 3px black;color:white;border:solid 1px gray;background:#8A0829;
+    width:40%;height: 35px;border-radius:3px;box-shadow: 0px 0px 2px black;color:white;border:solid 1px gray;background:#dd4b39;
 }
 #loginbtn
 {
-    width:94%;height:40px;border-radius: 5px;border:solid 1px whitesmoke;background:#9E9E9E;
+    width:60%;height:40px;border-radius: 5px;border:solid 1px whitesmoke;background:#DC7633    ;
     box-shadow: 0px 0px 2px black;margin-top:10px;margin-bottom:10px;font-weight: bold; font-size: 17px; 
 }
 #signupbtn

@@ -167,13 +167,13 @@
                 
                         var event_title=show_title;
                 
-                     var rsvp_title=alert("RSVP to "+ show_title +"? <br><input >");
+                     var rsvp_title=alert("RSVP to "+ show_title +"? ");
                      $.afui.loadContent("#formdata",false,false,"fade"); 
                    
                         
                             var evdisp = document.getElementById("contactform");
                             evdisp.innerHTML= 
-                           ' First Name:<input id="fusername" type="text"/><br>Last Name:<input id="lusername" type="text"/><br>Mobile No:<input id="userphone" type="text"/><button id="reserve" name=" '+ event_title +'" onclick="rsvp_user(this.name)">RSVP NOW</button>';
+                           ' First Name:<br><input id="fusername" type="text"/><br>Last Name:<br><input id="lusername" type="text"/><br>Mobile No:<br><input id="userphone" type="text"/><center><button id="reserve" name=" '+ event_title +'" onclick="rsvp_user(this.name)">RSVP NOW</button></center>';
                 /*
                      var rsvp_title=show_title;
                   var updiv = document.getElementById("upcomingev");
@@ -202,7 +202,7 @@
                          $.afui.toast(error);
                     }
 
-                    if(fusername=='' && lusername !==''&& userphone !==''){
+                   else if(fusername=='' && lusername !==''&& userphone !==''){
 
                        var passerror={ message:"Enter First Name",
                                         position:"tc",
@@ -212,7 +212,7 @@
                                     };
                           $.afui.toast(passerror);
                     }
-                    if(lusername=='' && fusername !=='' && userphone!==''){
+                    else if(lusername=='' && fusername !=='' && userphone!==''){
 
                           var emailerror={ message:"Enter Last Name",
                                                 position:"tc",
@@ -222,7 +222,7 @@
                                       };
                            $.afui.toast(emailerror);
                      } 
-                     if(userphone=='' && fusername !=='' && userphone!==''){
+                     else if(userphone=='' && fusername !=='' && userphone!==''){
 
                           var emailerror={ message:"Enter Phone No",
                                                 position:"tc",
@@ -247,7 +247,6 @@
                                            
                                            }
 
-
                                 });      
 
                              return false;
@@ -260,37 +259,35 @@
                   
             
             function eventListener(show_id) {
-                      var id=show_id;
-                     $.afui.toast(id);
+                              var id=show_id;
+                               var display;
+                              var index, len;                    
                                 $.ajax({
-                        dataType: "json",
-                        data: display,
-                        url: "http://192.168.1.123:3000/events",
-                        cache: false,
-                        method: 'GET',
-                        success: function(rsp) {
-                             var i;
+                                dataType: "json",
+                                data:display,
+                                url: "http://192.168.1.123:3000/events",
+                                cache: false,
+                                method: 'GET',
+                                success: function(rsp) {
+                                     var i;                    
+                           for(var i = 0 ; i < rsp.length; ++i) {
+                                if( rsp[i].title == id) {
                              var venue;
                              var desc;
                              var evt_time;
                              var evt_date;
                              var event_id;
-
-                           for(var i = 0 ; i < rsp.length; ++i) {
-                                if( rsp[i].title == id) {
-                                    
-                                    var title= rsp[i].title;
-                                    venue= rsp[i].venue;
-                                    desc = rsp[i].desc;
-                                    evt_date= rsp[i].date;
-                                    evt_time = rsp[i].time;
-                                    enent_id = rsp[i]._id;
-                                   
-                                    
+                             var title= rsp[i].title;
+                             var datedata=rsp[i].date;
+                            var date = new Date(datedata);
+                            var dateformt=(date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();        
+                            venue= rsp[i].venue;
+                            desc = rsp[i].desc;                          
+                            evt_time = rsp[i].time;                                   
                             $.afui.loadContent("#rsvpy",false,false,"fade"); 
                             var evdisp = document.getElementById("evdisp");
                             evdisp.innerHTML= 
-                           '<div style=" box-shadow: 0px 0px 3px black" ><b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr>'+ desc +'<br><b>venue:</b>'+ venue +'<br><b>Date:</b>'+ evt_date +'<em>'+ evt_time +'</em></div><center><button id="reserve" name=" '+ title +'" onclick="rs(this.name)">RSVP THE EVENT</button></center>';
+                           '<div style=" box-shadow: 0px 0px 3px black" ><b style="font-size:18px;font-family:times new romans;margin-top:60px;padding-top:30px;">'+ show_id + '</b><hr>'+ desc +'<br><b>venue:</b>'+ venue +'<br><b>Date:</b>'+ dateformt +'<em>&nbsp;'+ evt_time +'</em></div><center><button id="reserve" name=" '+ title +'" onclick="rs(this.name)">RSVP THE EVENT</button></center>';
                                 }
                                
                            
@@ -327,7 +324,12 @@
 
                                                  var title=rsp[i].title;
                                                  var desc=rsp[i].desc;
-                                                          text +='<div style="width:100%;height:auto;background:#FFFFFF;border-radius:3px; box-shadow: 0px 0px 4px black" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br><b style="color:blue;">' + rsp[i].date  + rsp[i].time +'</b></div><hr> &nbsp;';
+                                                 var datedata=rsp[i].date;
+                                                var date = new Date(datedata);
+                                                var dateformt=(date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+                                               
+                                                
+                                                          text +='<div style="width:100%;height:auto;background:#FFFFFF;border-radius:3px; box-shadow: 0px 0px 4px black" id="'+ title + '" onclick="eventListener(this.id)">' + ' <b style="font-family:times new romans;font-size:18px;">' +rsp[i].title + '</b> <br>' + rsp[i].venue + '<br><b style="color:blue;">' + dateformt+'&nbsp;'  + rsp[i].time +'</b></div><hr> &nbsp;';
 
                                                 updiv.innerHTML=text;
                                     }
@@ -345,11 +347,6 @@
               $.afui.loadContent("#login",false,false,"fade"); 
             }
             
-            function tomain() {
-                           
-                 $.afui.loadContent("#mainpage",false,false,"fade"); 
-             }
-
              function signup() {
                                
                 $.afui.loadContent("#signup",false,false,"fade"); 
@@ -394,7 +391,7 @@
                   
                       else if(email !='' && pass1 !=='') {
                          var details='&username='+ email + '&password='+pass1;
-                                       $.afui.loadContent("#landing",false,false,"fade");      
+                                         
     
                                   $.ajax({
 
@@ -410,9 +407,8 @@
                                                     } else{
                                                         
                                                             $.afui.loadContent("#landing",false,false,"fade"); 
-                                                            var homename=upcoming ();
-                                                            auth.innerHTML=homename;
-                                                       
+                                                            upcoming ();
+                                                           
                                                         
                                                         
                                                          
@@ -497,7 +493,7 @@
                                         $.afui.toast(num);
                                             if( num !==1){
                                                 $.afui.loadContent("#landing",false,false,"fade"); 
-                                                 auth.innerHTML='Welcome '+ email;
+                                                 upcoming ();
 
                                             } else{
 
@@ -563,11 +559,11 @@
 
                     try {
 
-                       window.open('http://facebook.com/swahilibox', '_blank', 'location=yes');
+                       window.open('http://facebook.com/swahilibox/', '_blank', 'location=yes');
 
                     } catch (e) {
 
-                         $.afui.toast("failed to open facebook");
+                         $.afui.toast("Failed to open facebook");
                       }
 
 
@@ -584,7 +580,7 @@
 
                     } catch (e) {
 
-                         $.afui.toast("failed to open twitter");
+                         $.afui.toast("Failed to open twitter");
                       }
 
 
@@ -604,46 +600,9 @@
                     },function(result){
                         alert('result: ' + result);
                     });
-                }
-
-             function showup() {
-
-                    var div = document.getElementById("searchdiv");
-                    div.innerHTML="<input type='text' style='width:100%;height:35px;margin-top:4px;background:#FAFA08;color:black;' placeholder='Search here...' onkeyup='display()' id='inputee'>";
-
-
             }
 
-            function display() {
-
-                 var data = document.getElementById("searchev");
-                 var input = document.getElementById("inputee").value;
-                 data.innerHTML=input;
-             }
-
-
-
-            function upcomingEvents()  {
-
-                var events;
-
-                // AJAX code to submit form.
-                $.ajax({
-                        type: "GET",
-                        url: "http://192.168.1.118:8080/api/status",
-                        data: events,
-                        cache: false,
-                        success: function(html) {
-
-                                   outdivy.innerHTML=html;
-
-                                 $.afui.loadContent("#inboxy",false,false,"fade");
-
-                        }
-                });
-            }
-
-            
+           
             function facebook(){
    
                 var auth = document.getElementById("data");
@@ -664,9 +623,9 @@
 
                                   
                          
-                                        $.afui.loadContent("#landing",false,false,"fade"); 
-                            progress.innerHTML='';
-                            
+                              $.afui.loadContent("#landing",false,false,"fade"); 
+                              progress.innerHTML='';
+                              upcoming ();
                             
                             auth.innerHTML='Welcome '+ rsp.facebook.name;
                                
@@ -682,7 +641,8 @@
           
                 
                 var auth = document.getElementById("data");
-                
+                var progress = document.getElementById("loader");
+                 progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
 
                     var display;
                     var index, len;
@@ -698,9 +658,10 @@
                                   
                          
                                         $.afui.loadContent("#landing",false,false,"fade"); 
+                                        progress.innerHTML='';
                             
-                            
-                            auth.innerHTML='Welcome '+ rsp.google.name;
+                                       upcoming ();
+                                       auth.innerHTML='Welcome '+ rsp.google.name;
                                
                                     }
 
@@ -727,6 +688,22 @@
        
               document.addEventListener("deviceready", onDeviceReady, true);
         }
+        function forgetpassword(){
+            $.afui.loadcontent("#forgetpass",false,false,"fade");
+        } 
+        function forgetpass(){
+            var email=document.getElementById("forgotemail").value;
+              if(email ==''){
+                   var passerror={ message:"Enter Email",
+                                        position:"tc",
+                                        delay:2000,
+                                        autoClose:true,
+                                        type:"error",
+                                    };
+                          $.afui.toast(passerror);
+                  
+              }
+        }    
            
 
         </script>
@@ -752,11 +729,14 @@
                             <br>
                                
 
-                            <button id="loginbtn" onclick="login()" >Sign In</button>
-                          
+                           
+                            
+                    <button id="loginbtn" onclick="login()"><span href="#signin" class="icon user" style="text-align:center;"  onclick="login()">Login</span></button>
+                    <!--<li><a href="#signup" class="icon pencil" style="text-align:center">Register</a></li>-->
+              
                            
                             <br>
-                            <p style="color:gray;">Sign in using Facebook or Google</p>
+                            <p style="color:gray;">Log in with Facebook or Google</p>
 
                             <br>
                             
@@ -764,11 +744,13 @@
                             <button id="lgn-google" onclick="google()">Google</button>
                         
 
-                            <button id="signupbtn" onclick="signup()">Sign Up</button>
+                            <!--<button id="signupbtn" onclick="signup()">Sign Up</button>-->
+                            <br>
+                            <br>
 
-                            <p style="color:gray;">Create your account</p>
+                            <p style="color:;">Don't have an account?<a href="#" onclick="signup()">Sign up.</a></p>
                                       
-<div id="loader" ></div>
+                        <div id="loader" ></div>
                         </center>
 
                     </div>
@@ -777,7 +759,7 @@
         </div>
 
         <div class="upage vertical-col left view" id="login" data-header="af-header-0" data-footer="none">
-            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#9E9E9E;">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#D2691E;">
 
                     <h1 style="color:black;margin-top:3px;">Login</h1>
                     <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
@@ -795,12 +777,15 @@
                          <input type="text" id="email" placeholder="Enter email or Username">
                         <input type="password" id="password" placeholder="Enter password">
                         <input type="submit" id="submitbtn" value="Login" onclick="loginauth()">
+                       <br>
+                      <p><a onclick="forgetpassword()">Forget password</a></p>
+                
             </center>
 
         </div>
 
         <div class="upage vertical-col left view" id="signup" data-header="af-header-0" data-footer="none" style="background:white;">
-            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#9E9E9E;">
+            <header class="container-group outer-element uib_w_1" data-uib="app_framework/header" data-ver="3" id="af-header-0" style="background:#D2691E;">
 
                 <h1 style="color:black;margin-top:3px;">Signup</h1>
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
@@ -829,7 +814,7 @@
 
         </div>
         <div class="upage vertical-col left view" id="landing" data-header="none" data-footer="none" style="background:white;">
-                    <div style="background:#9E9E9E;">
+                    <div style="background:#D2691E;">
 
                         <span onclick="openNav()"><button style="margin-top:10px;background-color:;"><img src="images/menu1.png" height="30px" width="40px"></button></span>
                              <b>Upcoming Events</b>
@@ -840,7 +825,7 @@
                         <ul class="list">
                             
                             <li style="background:#9E9E9E"><a href="#" onclick="closeNav()"> <img src="images/lg.png" style="float:;height:px;width:px;" id=""></a></li>
-                            <li><a href="#landing" onclick="closeNav()" id="info"><span class="icon home"></span>Home</a></li>
+                            <li><a href="#landing" onclick="closeNav()" id="info"><span class="icon-home"></span>Home</a></li>
                             
                             <li><a href="#about" onclick="closeNav()">Swahilibox</a></li>
                             <li><a href="#app" onclick="closeNav()">app</a></li>
@@ -860,7 +845,7 @@
 
         </div>
         <div class="upage vertical-col left view" id="about" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#9E9E9E;">
+            <div style="background:#D2691E;">
 
                   <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
@@ -887,41 +872,9 @@
             </center>
 
         </div>
-      <!--
-        <div class="upage vertical-col left view" id="events" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#FAFA08;">
-
-                <dl class="dropdown">
-                    <dt id="one-ddheader" onclick="home()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
-
-                </dl>
-
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
-
-            </div>
-            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
-                <b>Current Events<br>
-                
-                 </b>
-                RSVP to our Current events &nbsp;»»»
-            </div>
-            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="upcoming()">
-                <b>Upcoming Events <br>
-                
-                 </b>
-                RSVP to our upcoming events &nbsp;»»»
-            </div>
-            <div style="width:100%;height:70px;border-bottom:solid 1px gray;padding-top:10px;" onclick="pastev()">
-                <b>Past Events<br>
-                 
-                  </b>
-                View our past events &nbsp;»»»
-
-            </div>
-
-        </div>-->
+   
         <div class="upage vertical-col left view" id="app" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#9E9E9E ;">
+            <div style="background:#D2691E ;">
 
                 <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
@@ -935,51 +888,34 @@
                
                 <center><img src="images/logo.jpg" height="100px" width="100px"><br>
                 version 0.1
+                 <br>
+                
+                   </center> 
+                <div id="contact">
+                    
+                      <a href="" onclick="browsefacebook()"><img src="images/facebook.png" height="22px" width="22px">Like us on facebook</a>
                 <br>
+                <br>
+                
                 
                     
-                    <button style="background:white"> 
-                      <a href="" onclick="browsefacebook()"><img src="images/facebook.png" height="22px" width="22px">Like us on facebook</a></button>
-                <br>
-                <br>
-                
-                
-                    <button style="background:white">
                         <a href="" onclick="browsetwitter()" ><img src="images/twitter.png" height="22" width="22">Follow us on twitter</a>
-                </button>
+               
                 <br>
                 <br>
                 
                     
-            <button style="background:white"> 
-                <a href="" onclick="email_share()"><img src="images/email.jpg" height="22" width="22">Contact us<br><em>info@swahilibox.com</em></a></button>
+            
+                <a href="" onclick="email_share()"><img src="images/email.jpg" height="22" width="22">Email:&nbsp;<em>info@swahilibox.com</em></a>
                 <br>
+                </div>
                 
-                </center>
             </div>
 
         </div>
-        <!--
-        <div class="upage vertical-col left view" id="upcoming" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#FAFA08;">
-                <dl class="dropdown">
-                    <dt id="one-ddheader" onclick="homeev()"><button style="border:solid 3px white;background:#FAFA08;box-shadow:0px 0px 2px black;border-radius:3px;font-size:bold;width:40px;">⇐</button></dt>
-
-                </dl>
-
-                <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
-
-            </div>
-            <br>
-            <br>
-            <div id="upcomingev">
-                 Upcoming events will be displayed here....
-
-            </div>
-           
-        </div>-->
+       
         <div class="upage vertical-col left view" id="formdata" data-header="none" data-footer="none" style="background:white;">
-            <div style="background:#9E9E9E;">
+            <div style="background:#D2691E;">
                  <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
                     <a onclick="home()">
@@ -988,12 +924,12 @@
                 </div>
 
             </div>
-            Please provide us with your contact
+            <b>Please provide us with your contact</b>
             <div id="contactform"></div>
         </div>
         
          <div class="upage vertical-col left view" id="rsvpy" data-header="none" data-footer="none" style="background:white;color:black;">
-              <div style="background:#9E9E9E;">
+              <div style="background:#D2691E;">
                   <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
                     <a onclick="home()">
@@ -1006,17 +942,25 @@
              
             </div>
         </div>
-        <div class="upage view" id="uib_page_2" data-header="none" data-footer="af-footer-0">
-            <div class="pages">
-                <div class="upage-content vertical-col left panel ac0" id="uib_page_3"></div>
-            </div>
-            <div class="upage-outer">
-                <div class="upage-content ac0 content-area vertical-col left"></div>
-            </div>
-            <footer class="outer-element uib_w_2" data-uib="app_framework/footer" data-ver="2" id="af-footer-0">
-            </footer>
-        </div>
+        <div class="upage vertical-col left view" id="forgetpass" data-header="none" data-footer="none" style="background:white;color:black;">
+              <div style="background:#D2691E;">
+                  <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
+                <div class="widget-container content-area horiz-area wrapping-col header-left">
+                    <a onclick="home()">
+                        <img src="images/back1.png" id="back">
+                    </a>
+                </div>
 
+            </div>
+            <div id="forgetpassword" >
+                
+                <input type="email" required id="forgotemail" placeholder="Enter Email">
+                <br>
+                <br>
+                <input type="submit" value="Create Account" id="submitbtn" onclick="forgetpass()">
+            </div>
+        </div>
+       
     </body>
 
 </html>
