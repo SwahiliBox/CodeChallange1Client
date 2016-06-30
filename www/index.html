@@ -20,7 +20,7 @@
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/skel.min.js"></script>
         <script src="assets/js/util.js"></script>
-       
+        <script src="js/sweetalert.min.js"></script>
 
         <script type="text/javascript" src="js/drop.js"></script>
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
@@ -55,6 +55,7 @@
 
         <link rel="stylesheet" href="css/app.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="js/sweetalert.css">
 
         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
         <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
@@ -71,12 +72,12 @@
         <!-- <script src="lib/mc/hammer.js"></script> -->
         <!-- <script src="lib/ft/fastclick.js"></script> -->
 
-				<!--
-		  * cordova.js is a phantom lib for "Cordova HTML5 web app," it does nothing in a "Standard HTML5 web app"
-		  * Seeing a "Failed to load resource: net::ERR_FILE_NOT_FOUND" message caused by this "cordova.js" script?
-		  * The cordova.js script is required if you convert your "Standard HTML5" project into a "Cordova" project.
-		  * You can safely ignore the error or comment out this line if you will not be developing a Cordova app.
-		-->
+        <!--
+  * cordova.js is a phantom lib for "Cordova HTML5 web app," it does nothing in a "Standard HTML5 web app"
+  * Seeing a "Failed to load resource: net::ERR_FILE_NOT_FOUND" message caused by this "cordova.js" script?
+  * The cordova.js script is required if you convert your "Standard HTML5" project into a "Cordova" project.
+  * You can safely ignore the error or comment out this line if you will not be developing a Cordova app.
+-->
         <script src="cordova.js" id="xdkJScordova_"></script>
 
         <script src="js/app.js"></script>
@@ -191,7 +192,7 @@
                          var userphone = document.getElementById("userphone").value;
                          
                          
-                             if(fusername=='' && lusername=='' && userphone==''){
+                             if(fusername=='' || lusername=='' || userphone==''){
 
                         var error={ message:"All fieled are required",
                             position:"tc",
@@ -202,38 +203,9 @@
                          $.afui.toast(error);
                     }
 
-                   else if(fusername=='' && lusername !==''&& userphone !==''){
-
-                       var passerror={ message:"Enter First Name",
-                                        position:"tc",
-                                        delay:2000,
-                                        autoClose:true,
-                                        type:"error",
-                                    };
-                          $.afui.toast(passerror);
-                    }
-                    else if(lusername=='' && fusername !=='' && userphone!==''){
-
-                          var emailerror={ message:"Enter Last Name",
-                                                position:"tc",
-                                                delay:2000,
-                                                autoClose:true,
-                                                type:"error",
-                                      };
-                           $.afui.toast(emailerror);
-                     } 
-                     else if(userphone=='' && fusername !=='' && userphone!==''){
-
-                          var emailerror={ message:"Enter Phone No",
-                                                position:"tc",
-                                                delay:2000,
-                                                autoClose:true,
-                                                type:"error",
-                                      };
-                           $.afui.toast(emailerror);
-                     } 
                   
-                      else if(lusername !=='' && fusername !=='' && userphone !=='') {
+                      else {
+                          
                          var rsvp='&firstname='+fusername  + '&lastname='+ lusername + '&phonenumber='+ userphone +  '&eventname='+ evt_title;
                                // AJAX code to submit form.
                                 $.ajax({
@@ -242,14 +214,13 @@
                                         data: rsvp,
                                         cache: false,
                                         success: function(rsvp_details) {
-                                               alert("You have RSVP successfuly");
-
+                                               swal("Good job!", "You have RSVP successfuly!", "success")
                                            
                                            }
 
                                 });      
 
-                             return false;
+                             
 
                          
                        }
@@ -316,7 +287,7 @@
                         cache: false,
                         method: 'GET',
                         success: function(rsp) {
-
+                              
                                     var text = "";
                                     var i;
                                     for (i = 0; i < rsp.length; i++) {
@@ -350,6 +321,10 @@
              function signup() {
                                
                 $.afui.loadContent("#signup",false,false,"fade"); 
+             }  
+            function main() {
+                               
+                $.afui.loadContent("#mainpage",false,false,"fade"); 
              }
 
              function loginauth() {
@@ -390,9 +365,7 @@
                      } 
                   
                       else if(email !='' && pass1 !=='') {
-                         var details='&username='+ email + '&password='+pass1;
-                                         
-    
+                         var details='&username='+ email + '&password='+pass1;                                   
                                   $.ajax({
 
                                         type: "POST",
@@ -406,8 +379,9 @@
                                                          $.afui.toast("Invalid username or password!");         
                                                     } else{
                                                         
-                                                            $.afui.loadContent("#landing",false,false,"fade"); 
-                                                            upcoming ();
+                                                        $.afui.loadContent("#landing",false,false,"fade"); 
+                                                     
+                                                        upcoming ();
                                                            
                                                         
                                                         
@@ -490,13 +464,16 @@
                                     cache: false,
                                     success: function(html) {
                                          var num=html;
-                                        $.afui.toast(num);
-                                            if( num !==1){
+                                        
+                                            if( num !=="1"){
                                                 $.afui.loadContent("#landing",false,false,"fade"); 
                                                  upcoming ();
+                                                $.afui.toast("You have sign up Successfully");
+
+                                                
 
                                             } else{
-
+                                                
                                                  $.afui.toast("Such username already exist! Please choose another name or sign in.");
                                             }
 
@@ -513,14 +490,6 @@
                             
                 
         }
-
-                    
-
-
-
-
-            
-
         /*
         opening sidebamenu
         */
@@ -602,44 +571,55 @@
                     });
             }
 
-           
+           /*
             function facebook(){
    
-                var auth = document.getElementById("data");
+              var auth = document.getElementById("data");
+                var progress = document.getElementById("loader");
+                progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
+                    var display;
+                   var index, len;                          
+                  
+             
+
+
+            }*/
+            function facebook() {
                 var progress = document.getElementById("loader");
                 progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
                 
-
-                    var display;
-                    var index, len;
-
-                    $.ajax({
+               $.ajax({
                         dataType: "json",
                         data: display,
-                        url: "http://192.168.1.123:3000/auth/facebook",
+                        url: "http://192.168.1.138:3000/auth/facebook",
                         cache: false,
                         method: 'GET',
-                        success: function(rsp) {
-
-                                  
-                         
-                              $.afui.loadContent("#landing",false,false,"fade"); 
-                              progress.innerHTML='';
-                              upcoming ();
-                            
-                            auth.innerHTML='Welcome '+ rsp.facebook.name;
+                        success: function(rsp) {                                                                        
+                                   $.afui.loadContent("#landing",false,false,"fade"); 
+                                        progress.innerHTML='';                          
+                                        upcoming ();
+                                       
                                
-                                    }
-
-                                
+                                    }                                
                         
                      });
 
-                     
-            }
-            function google(){
-          
-                
+                /*
+                   $.ajax({
+                    type: 'GET',
+                    dataType: "text", // You need to use dataType text else it will try to parse it.
+                    url: "http://192.168.1.138:3000/auth/facebook",
+                    success: function (responseData, textStatus, jqXHR) {
+                        alert("in");
+                        var data = JSON.parse(responseData['AuthenticateUserResult']);
+                        alert(data);
+                    },
+                    error: function (responseData, textStatus, errorThrown) {
+                        alert('POST failed.');
+                    }
+                });*/
+                }
+            function google(){               
                 var auth = document.getElementById("data");
                 var progress = document.getElementById("loader");
                  progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';
@@ -653,19 +633,13 @@
                         url: "http://192.168.1.123:3000/auth/google",
                         cache: false,
                         method: 'GET',
-                        success: function(rsp) {
-
-                                  
-                         
-                                        $.afui.loadContent("#landing",false,false,"fade"); 
-                                        progress.innerHTML='';
-                            
-                                       upcoming ();
-                                       auth.innerHTML='Welcome '+ rsp.google.name;
+                        success: function(rsp) {                                  
+                                    $.afui.loadContent("#landing",false,false,"fade"); 
+                                        progress.innerHTML='';                          
+                                        upcoming ();
+                                       
                                
-                                    }
-
-                                
+                                    }                                
                         
                      });
             }
@@ -681,7 +655,7 @@
             }
             
              function exitFromApp(){
-         
+             alert("exitap");
             navigator.app.exitApp();
          }
         function onLoad() {
@@ -689,7 +663,7 @@
               document.addEventListener("deviceready", onDeviceReady, true);
         }
         function forgetpassword(){
-            $.afui.loadcontent("#forgetpass",false,false,"fade");
+            $.afui.loadContent("#forgetpass",false,false,"fade"); 
         } 
         function forgetpass(){
             var email=document.getElementById("forgotemail").value;
@@ -736,7 +710,7 @@
               
                            
                             <br>
-                            <p style="color:gray;">Log in with Facebook or Google</p>
+                            <p style="color:black;">Log in with Facebook or Google</p>
 
                             <br>
                             
@@ -748,7 +722,7 @@
                             <br>
                             <br>
 
-                            <p style="color:;">Don't have an account?<a href="#" onclick="signup()">Sign up.</a></p>
+                            <p style="color:black;">Don't have an account?<a href="#" onclick="signup()">Sign up.</a></p>
                                       
                         <div id="loader" ></div>
                         </center>
@@ -773,12 +747,17 @@
 
                     <div class="widget-container content-area horiz-area wrapping-col header-right"></div>
             </header>
-            <center>      
-                         <input type="text" id="email" placeholder="Enter email or Username">
-                        <input type="password" id="password" placeholder="Enter password">
-                        <input type="submit" id="submitbtn" value="Login" onclick="loginauth()">
-                       <br>
-                      <p><a onclick="forgetpassword()">Forget password</a></p>
+            <br>
+            <br>
+            <br>
+                
+              
+         <center>      
+            <input type="text" id="email" placeholder="Enter email or Username">
+            <input type="password" id="password" placeholder="Enter password">
+            <input type="submit" id="submitbtn" value="Login" onclick="loginauth()">
+           <br>
+         <!-- <p><a href="#" onclick="forgetpassword()">Forget password</a></p>-->
                 
             </center>
 
@@ -817,19 +796,24 @@
                     <div style="background:#D2691E;">
 
                         <span onclick="openNav()"><button style="margin-top:10px;background-color:;"><img src="images/menu1.png" height="30px" width="40px"></button></span>
-                             <b>Upcoming Events</b>
+                            
+                        <span style=""> &nbsp;&nbsp;&nbsp;&nbsp;<b> Upcoming Events</b></span>
                         <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                         <div id="mySidenav" class="sidenav">
                               
                          <div class="panel active" id="navPage1" data-title="Foobar">
-                        <ul class="list">
+                             <ul style="width:100%">
+                                <li style="background:#D2691E"><a href="#" onclick="closeNav()"> <img src="images/lg.png" style="float:;height:px;width:px;" id=""></a></li>
+                             </ul>
+                        <ul class="list" style="width:100%">
                             
-                            <li style="background:#9E9E9E"><a href="#" onclick="closeNav()"> <img src="images/lg.png" style="float:;height:px;width:px;" id=""></a></li>
-                            <li><a href="#landing" onclick="closeNav()" id="info"><span class="icon-home"></span>Home</a></li>
+                            <li><a href="#landing" onclick="closeNav()" id="info" style="color:orange"><span class="icon "></span><b>&nbsp;&nbsp;&nbsp;Home</b></a></li>
                             
-                            <li><a href="#about" onclick="closeNav()">Swahilibox</a></li>
-                            <li><a href="#app" onclick="closeNav()">app</a></li>
-                            <li><a href="#" onclick="social_share()"><img src="images/126467.png" height="10px" width="10px">share</a></li>
+                            <li><a href="#about" onclick="closeNav()"><b>&nbsp;&nbsp;&nbsp;Swahilibox</b></a></li>
+                            <li><a href="#app" onclick="closeNav()"><b>&nbsp;&nbsp;&nbsp;app</b></a></li>
+                            <li><a href="#" onclick="social_share()"><b>&nbsp;&nbsp;&nbsp;share</b></a></li>
+                            <li><a href="#" onclick="exitFromApp()"><b>&nbsp;&nbsp;&nbsp;Log Out</b></a></li>
+                            
                         </ul>
                     </div>
                         </div>
@@ -838,6 +822,8 @@
             <center>
                 <div id=""></div>
             </center>
+            <br>
+            
             <div id="upcomingev">
                  Upcoming events will be displayed here....
 
@@ -868,7 +854,7 @@
                 </div>
                 <br>
                 <p font-weight:bold;="">For more information visit our website at</p>
-                <button onclick="openweb()" style="width:50%;height:30px;border-radius:4px;background:#DF7401;color:white;border:solid 1px gray;">www.swahilibox.co.ke</button>
+                <button onclick="openweb()" style="width:70%;height:30px;border-radius:4px;background:#DF7401;color:white;border:solid 1px gray;">www.swahilibox.co.ke</button>
             </center>
 
         </div>
@@ -884,29 +870,34 @@
                 </div>
                 
             </div>
-            <div id="searchev">
+            <div id="">
                
                 <center><img src="images/logo.jpg" height="100px" width="100px"><br>
-                version 0.1
+                <b>version 1.0.1</b>
                  <br>
                 
                    </center> 
                 <div id="contact">
-                    
-                      <a href="" onclick="browsefacebook()"><img src="images/facebook.png" height="22px" width="22px">Like us on facebook</a>
+                    <br>
+                    <br>
+                    <br>
+                      <a href="" onclick="browsefacebook()" style="text-decoration:none"><img src="images/facebook.png" height="22px" width="22px">Like us on facebook</a>
                 <br>
                 <br>
                 
                 
                     
-                        <a href="" onclick="browsetwitter()" ><img src="images/twitter.png" height="22" width="22">Follow us on twitter</a>
+                        <a href="" onclick="browsetwitter()" style="text-decoration:none" ><img src="images/twitter.png" height="22" width="22">Follow us on twitter</a>
                
                 <br>
                 <br>
                 
                     
             
-                <a href="" onclick="email_share()"><img src="images/email.jpg" height="22" width="22">Email:&nbsp;<em>info@swahilibox.com</em></a>
+                <a href="" onclick="email_share()" style="text-decoration:none" ><img src="images/email.jpg" height="22" width="22">Email:&nbsp;<em>info@swahilibox.com</em></a>
+                <br>
+                <br>
+                <br>
                 <br>
                 </div>
                 
@@ -942,25 +933,27 @@
              
             </div>
         </div>
-        <div class="upage vertical-col left view" id="forgetpass" data-header="none" data-footer="none" style="background:white;color:black;">
+        <!--
+        <div class="upage vertical-col left view" id="forgetpassword" data-header="none" data-footer="none" style="background:white;color:black;">
               <div style="background:#D2691E;">
                   <img src="images/logo.jpg" style="float:right;height:42px;width:42px;" id="back">
                 <div class="widget-container content-area horiz-area wrapping-col header-left">
-                    <a onclick="home()">
+                    <a onclick="main()">
                         <img src="images/back1.png" id="back">
                     </a>
                 </div>
 
             </div>
-            <div id="forgetpassword">
+            
+            <div id="forgetpassword" >
                 
                 <input type="email" required id="forgotemail" placeholder="Enter Email">
-                <br>
                 <br>
                 <br>
                 <input type="submit" value="Create Account" id="submitbtn" onclick="forgetpass()">
             </div>
         </div>
+       -->
        
     </body>
 
