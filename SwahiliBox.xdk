@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "fb653aaa-e8c4-4e83-865b-864ab3100fc8",
-      "lastModifiedDate": 1464160181563,
+      "lastModifiedDate": 1468219216851,
       "creationDate": 1464155475317
     },
     "XDK-app-designer": "true",
@@ -69,6 +69,30 @@
         "name": "Splashscreen",
         "description": "Cordova Splashscreen Plugin",
         "checksum": "452a4659"
+      },
+      {
+        "id": "cordova-plugin-x-socialsharing",
+        "name": "SocialSharing",
+        "version": "5.0.10",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-x-socialsharing",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-x-socialsharing",
+        "selectedState": "Included",
+        "checksum": "4dbfeb59",
+        "dependsOn": [],
+        "topLevel": true,
+        "cordovaVersion": ">=3.0.0",
+        "author": "Eddy Verbruggen",
+        "permissions": {
+          "android:name": [
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+          ]
+        },
+        "description": "\n    Share text, images (and other files), or a link via the native sharing widget of your device.\n    Android is fully supported, as well as iOS 6 and up. WP8 has somewhat limited support.\n  ",
+        "data": {},
+        "dependedBy": []
       }
     ],
     "buildConfigurations": {
