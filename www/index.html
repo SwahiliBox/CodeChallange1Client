@@ -332,9 +332,9 @@
               else if(email !='' && pass1 !=='') {
                var progress = document.getElementById("loaderlogin");
                 progress.innerHTML='<center><img src="images/loading.gif" style="height:120px;width:120px;border-radius:50%;"></center>';  
-                 var details='&username='+ email + '&password='+pass1; 
+                 var details='&username='+ email + '&password='+pass1;               
                           $.ajax({
-
+                                            
                                 type: "POST",
                                 url: "http://192.168.1.123:3000/login",
                                 data: details,
